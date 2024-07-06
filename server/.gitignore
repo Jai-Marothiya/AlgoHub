@@ -1,0 +1,4 @@
+# server-level gitignore
+node_modules
+build
+.env

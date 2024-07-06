@@ -1,0 +1,4 @@
+# Root-level gitignore
+node_modules
+build
+.env
