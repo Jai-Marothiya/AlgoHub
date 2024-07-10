@@ -1,0 +1,133 @@
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import Logo from "../icons/Logo.js";
+import { googleLogout } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+import { DataContext } from "../../context/DataProvider.js";
+
+const settings = ["Admin View", "Logout"];
+
+const Navbar = () => {
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
+  const { account, setIsAuthenticated } = React.useContext(DataContext);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = (val) => {
+    setAnchorElUser(null);
+    if (val === "Logout") {
+      handleLogout();
+    }
+  };
+
+  const handleLogout = () => {
+    // Remove the token from local storage
+    localStorage.removeItem("refreshToken");
+
+    googleLogout();
+    setIsAuthenticated(false);
+    navigate("/auth");
+    console.log("User logged out");
+  };
+
+  return (
+    <AppBar
+      position="static"
+      sx={{
+        background: "#fff",
+        boxShadow: "none",
+        borderBottom: "2px solid rgba(0, 0, 0, 0.28)",
+      }}
+    >
+      <Container maxWidth="90%">
+        <Toolbar
+          disableGutters
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Logo />
+          </Box>
+
+          <Box
+            sx={{
+              flexGrow: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Tooltip>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar
+                  src="/static/images/avatar/2.jpg"
+                  sx={{
+                    background: "#3246DE",
+                    fill: "#fff",
+                    height: "28px",
+                    width: "28px",
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleCloseUserMenu(setting)}
+                >
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                ml: 1,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "Roboto, sans-serif",
+                font: 2,
+                color: "black",
+                textDecoration: "none",
+                textShadow: "4px 4px 9px rgba(0,0,0,0.44)",
+              }}
+            >
+              {account.name}
+            </Typography>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
+export default Navbar;
