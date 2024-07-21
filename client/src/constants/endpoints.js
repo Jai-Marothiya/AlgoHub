@@ -7,7 +7,11 @@ const baseURL = `http://localhost:5000`;
 export const endpoints = {
   googleLogin: `${baseURL}/login`,
   getUser: `${baseURL}/get-user`,
-  uploadProblem: `${baseURL}/problem`,
+  uploadProblem: `${baseURL}/upload-problem`,
+  updateProblem: `${baseURL}/update-problem`,
   getProblems: `${baseURL}/get-problems`,
   markCompleted: `${baseURL}/mark-completed`,
+  saveNote: `${baseURL}/save-note`,
+  getNote: `${baseURL}/get-note`,
+  deleteNote: `${baseURL}/delete-note`,
 };

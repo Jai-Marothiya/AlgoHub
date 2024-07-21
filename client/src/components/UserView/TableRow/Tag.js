@@ -6,9 +6,6 @@ const Tag = ({ tag }) => {
     <Box
       sx={{
         border: "1px solid rgba(240, 243, 254, 1)",
-        "&:hover": {
-          border: "1px solid #b7c6ff",
-        },
         borderRadius: 4,
         paddingY: "5px",
         paddingX: 2,
@@ -18,11 +15,12 @@ const Tag = ({ tag }) => {
       <Typography
         sx={{
           color: "rgba(37, 42, 131, 1)",
-          fontFamily: "Roboto, sans-serif",
+          fontFamily: "Jost, sans-serif",
           fontSize: "12px",
-          fontWeight: "200",
+          fontWeight: "400",
           lineHeight: "18.0px",
           letterSpacing: "0px",
+          width: "max-content",
         }}
       >
         {tag}

@@ -48,7 +48,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
-        <Box>
+        <Box sx={{ width: "99vw", height: "100vh" }}>
           <Routes>
             <Route exact path="/auth" element={<Login />} />
             {/* <Route

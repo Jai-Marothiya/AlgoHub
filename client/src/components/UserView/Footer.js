@@ -6,9 +6,9 @@ const Footer = () => {
     <Box sx={{ display: "flex", justifyContent: "center", marginY: 3 }}>
       <Typography
         sx={{
-          fontFamily: "Roboto, sans-serif",
+          fontFamily: "Jost, sans-serif",
           fontSize: "18px",
-          fontWeight: "100",
+          fontWeight: "400",
           lineHeight: "27.0px",
           letterSpacing: " 0.5px",
           color: "rgba(0, 0, 0, 0.72)",

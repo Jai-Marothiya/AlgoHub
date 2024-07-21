@@ -10,9 +10,9 @@ const Level = ({ level }) => {
         <Typography
           sx={{
             color: "rgba(0, 120, 48, 1)",
-            fontFamily: "Roboto, sans-serif",
+            fontFamily: "Jost, sans-serif",
             fontSize: "16px",
-            fontWeight: "100",
+            fontWeight: "400",
             lineHeight: "24.0px",
             letterSpacing: "0px",
           }}
@@ -23,9 +23,9 @@ const Level = ({ level }) => {
         <Typography
           sx={{
             color: "rgba(234, 139, 71, 1)",
-            fontFamily: "Roboto, sans-serif",
+            fontFamily: "Jost, sans-serif",
             fontSize: "16px",
-            fontWeight: "100",
+            fontWeight: "400",
             lineHeight: "24.0px",
             letterSpacing: "0px",
           }}
@@ -36,9 +36,9 @@ const Level = ({ level }) => {
         <Typography
           sx={{
             color: "rgba(216, 44, 44, 1)",
-            fontFamily: "Roboto, sans-serif",
+            fontFamily: "Jost, sans-serif",
             fontSize: "16px",
-            fontWeight: "100",
+            fontWeight: "400",
             lineHeight: "24.0px",
             letterSpacing: "0px",
           }}

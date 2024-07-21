@@ -3,12 +3,11 @@ import React, { useContext, useEffect } from "react";
 import GoogleAuth from "./GoogleAuth";
 import ALogo from "../icons/ALogo";
 import { DataContext } from "../../context/DataProvider";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import {SideImage} from "../icons/"
 
 const Login = () => {
-  const { isAuthenticated, setProblems } = useContext(DataContext);
+  const { isAuthenticated, problems, setProblems } = useContext(DataContext);
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) {
@@ -17,14 +16,13 @@ const Login = () => {
         method: "GET",
         url: "http://localhost:5000/get-problems",
       }).then((response) => {
-        console.log("Fetched Problems successfully: ", response);
         setProblems(response.data);
       });
 
       //if user authenticated then navigate to dashboard directly
       navigate("/");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, problems]);
   return (
     <Box
       sx={{
@@ -57,7 +55,7 @@ const Login = () => {
           <Box sx={{ width: "100%", mt: 5, mb: 5 }}>
             <Typography
               sx={{
-                fontFamily: "Roboto, sans-serif",
+                fontFamily: "Jost, sans-serif",
                 fontSize: "48px",
                 fontWeight: "600",
                 lineHeight: "60.0px",
@@ -70,10 +68,10 @@ const Login = () => {
             </Typography>
             <Typography
               sx={{
-                fontFamily: "Roboto, sans-serif",
+                fontFamily: "Jost, sans-serif",
                 fontSize: "20px",
                 lineHeight: "32px",
-                fontWeight: "100",
+                fontWeight: "400",
                 letterSpacing: "-0px",
                 color: "rgba(0, 0, 0, 0.72)",
               }}

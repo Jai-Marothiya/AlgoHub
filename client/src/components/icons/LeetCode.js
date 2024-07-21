@@ -1,7 +1,7 @@
 import { SvgIcon } from "@mui/material";
 import React from "react";
 
-const Leetcode = ({ width, height }) => {
+const LeetCode = ({ width, height }) => {
   return (
     <SvgIcon sx={{ width, height }}>
       <svg
@@ -32,4 +32,4 @@ const Leetcode = ({ width, height }) => {
   );
 };
 
-export default Leetcode;
+export default LeetCode;

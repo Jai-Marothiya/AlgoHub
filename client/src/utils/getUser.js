@@ -15,8 +15,10 @@ export const getUsers = async (
       },
     });
 
+    console.log("response: ", response);
     if (response.ok) {
       const data = await response.json();
+      console.log("data: ", data);
       // Handle the user data here
       setIsAuthenticated(true);
       setIsLoading(false); // Authentication check complete

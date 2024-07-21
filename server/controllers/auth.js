@@ -10,6 +10,7 @@ const createToken = (payload) => {
 
 export const googleLogin = async (req, res) => {
   const { token_id, email, name } = req.body;
+  console.log(req.body);
 
   try {
     // Verify the ID token
@@ -23,14 +24,16 @@ export const googleLogin = async (req, res) => {
     );
 
     const { email_verified } = response.data;
+    console.log("email_verified: ", email_verified);
 
     if (email_verified) {
       // Check if the user exists in the database
       const user = await db("users").where({ email }).first();
+      console.log("user: ", user);
 
       if (user) {
         // User exists, respond accordingly
-        console.log("User already exists:", user.email);
+        console.log("User already exists:", user);
         const token = createToken({ id: user.id, user: user });
         return res
           .status(200)
@@ -41,13 +44,13 @@ export const googleLogin = async (req, res) => {
           .insert({ email, name })
           .returning("*");
 
-        console.log("newUser created: ", newUser.email);
+        console.log("newUser created: ", newUser[0]);
 
-        const token = createToken({ id: newUser.id, user: newUser });
+        const token = createToken({ id: newUser.id, user: newUser[0] });
 
         return res
           .status(201)
-          .json({ message: "User created", token, user: newUser });
+          .json({ message: "User created", token, user: newUser[0] });
       }
     } else {
       return res.status(400).json({ message: "Email not verified" });
@@ -68,8 +71,9 @@ export const getUser = async (req, res) => {
     } catch (e) {
       return res.status(401).send("unauthorized");
     }
-    let user = await db("users").where({ id: decoded.id }).first();
-    console.log("user: ", user.email);
+    console.log("decoded: ", decoded);
+    let user = await db("users").where({ id: decoded.user.id }).first();
+    console.log("user: ", user);
     return res.status(200).json(user);
     // return res.send(200).json(decoded);
   }

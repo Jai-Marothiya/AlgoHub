@@ -5,7 +5,6 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -14,12 +13,14 @@ import { googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataProvider.js";
 
-const settings = ["Admin View", "Logout"];
+const adminSettings = ["Admin View", "User View", "Logout"];
+const nonAdminSettings = ["Logout"];
 
 const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
-  const { account, setIsAuthenticated } = React.useContext(DataContext);
+  const { account, setIsAuthenticated, adminView, setAdminView } =
+    React.useContext(DataContext);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -29,6 +30,10 @@ const Navbar = () => {
     setAnchorElUser(null);
     if (val === "Logout") {
       handleLogout();
+    } else if (val === "Admin View") {
+      setAdminView(true);
+    } else if (val === "User View") {
+      setAdminView(false);
     }
   };
 
@@ -49,12 +54,18 @@ const Navbar = () => {
         background: "#fff",
         boxShadow: "none",
         borderBottom: "2px solid rgba(0, 0, 0, 0.28)",
+        pl: 6,
+        pr: 4,
       }}
     >
-      <Container maxWidth="90%">
+      <Box maxWidth="100%">
         <Toolbar
           disableGutters
-          sx={{ display: "flex", justifyContent: "space-between" }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: 0,
+          }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Logo />
@@ -86,47 +97,59 @@ const Navbar = () => {
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: "bottom",
+                horizontal: "left",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={() => handleCloseUserMenu(setting)}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {(account.is_admin ? adminSettings : nonAdminSettings).map(
+                (setting) =>
+                  (adminView && setting === "Admin View") ||
+                  (!adminView && setting === "User View") ? (
+                    <></>
+                  ) : (
+                    <MenuItem
+                      key={setting}
+                      onClick={() => handleCloseUserMenu(setting)}
+                    >
+                      <Typography
+                        textAlign="center"
+                        sx={{
+                          fontFamily: "Jost, sans-serif",
+                          font: 2,
+                          lineHeight: "28px",
+                          color: "rgba(0, 0, 0, 0.87)",
+                        }}
+                      >
+                        {setting}
+                      </Typography>
+                    </MenuItem>
+                  )
+              )}
             </Menu>
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
-                mr: 2,
                 ml: 1,
                 display: { xs: "none", md: "flex" },
-                fontFamily: "Roboto, sans-serif",
+                fontFamily: "Jost, sans-serif",
                 font: 2,
-                color: "black",
+                color: "rgba(0, 0, 0, 0.87)",
                 textDecoration: "none",
-                textShadow: "4px 4px 9px rgba(0,0,0,0.44)",
               }}
             >
               {account.name}
             </Typography>
           </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 };

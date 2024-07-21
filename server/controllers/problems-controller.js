@@ -25,7 +25,45 @@ export const uploadProblem = async (req, res) => {
 
     console.log("newProblem uploaded: ", newProblem[0].problem_desc);
 
-    return res.status(201).json({ message: "Problem uploaded", newProblem });
+    return res
+      .status(201)
+      .json({ message: "Problem uploaded", newProblem: newProblem[0] });
+  } catch (error) {
+    console.error("Error during problem uploading:", error.message);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateProblem = async (req, res) => {
+  const {
+    id,
+    problem_desc,
+    problem_url,
+    problem_tags,
+    platform,
+    problem_level,
+    uploaded_by,
+  } = req.body;
+
+  try {
+    // User does not exist, insert new user
+    const updatedProblem = await db("problems")
+      .where({ id })
+      .update({
+        problem_desc,
+        problem_url,
+        problem_tags,
+        platform,
+        problem_level,
+        uploaded_by,
+      })
+      .returning("*");
+
+    console.log("newProblem uploaded: ", updatedProblem[0].problem_desc);
+
+    return res
+      .status(201)
+      .json({ message: "Problem uploaded", updatedProblem: updatedProblem[0] });
   } catch (error) {
     console.error("Error during problem uploading:", error.message);
     return res.status(500).json({ message: error.message });

@@ -1,24 +1,45 @@
 import React from "react";
 import { capitalizeFirstLetter } from "../../../utils/utils";
 import GFG from "../../icons/GFG";
-import LeetCode from "../../icons/Leetcode";
+import LeetCode from "../../icons/LeetCode";
+import CodeChef from "../../icons/CodeChef";
+import CodeForces from "../../icons/CodeForces";
+import Atcoder from "../../icons/Atcoder";
+import InterviewBit from "../../icons/InterviewBit";
 import { Box } from "@mui/material";
+import { ProblemPlatforms } from "../../../constants/Constants";
+import HackerRank from "../../icons/HackerRank";
 
-const PlatformLogo = ({ platform }) => {
-  const Platform = capitalizeFirstLetter(platform);
+const PlatformLogo = ({ Platform, width, height }) => {
   return (
     <Box sx={{ mr: 2 }}>
-      {Platform === "Gfg" ? (
+      {Platform === ProblemPlatforms.GFG ? (
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <GFG width="44px" height="44px" />
+          <GFG width={width} height={height} />
         </Box>
-      ) : Platform === "Leetcode" ? (
+      ) : Platform === ProblemPlatforms.LEETCODE ? (
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <LeetCode width="44px" height="44px" />
+          <LeetCode width={width} height={height} />
+        </Box>
+      ) : Platform === ProblemPlatforms.CODEFORCES ? (
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <CodeForces width={width} height={height} />
+        </Box>
+      ) : Platform === ProblemPlatforms.CODECHEF ? (
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <CodeChef width={width} height={height} />
+        </Box>
+      ) : Platform === ProblemPlatforms.ATCODER ? (
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Atcoder width={width} height={height} />
+        </Box>
+      ) : Platform === ProblemPlatforms.HACKERRANK ? (
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <HackerRank width={width} height={height} />
         </Box>
       ) : (
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <GFG width="44px" height="44px" />
+          <InterviewBit width={width} height={height} />
         </Box>
       )}
     </Box>
