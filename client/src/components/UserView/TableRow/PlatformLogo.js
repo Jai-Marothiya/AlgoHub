@@ -1,5 +1,4 @@
 import React from "react";
-import { capitalizeFirstLetter } from "../../../utils/utils";
 import GFG from "../../icons/GFG";
 import LeetCode from "../../icons/LeetCode";
 import CodeChef from "../../icons/CodeChef";

@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { Box, Checkbox, Typography } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { DataContext } from "../../../context/DataProvider";
-import { ProblemStatus, ProblemTags } from "../../../constants/Constants";
+import { ProblemTags } from "../../../constants/Constants";
 
 const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
   "& .MuiSvgIcon-root": {
