@@ -2,10 +2,10 @@ export const ProblemPlatforms = {
   GFG: "Geeks for Geeks",
   LEETCODE: "LeetCode",
   CODEFORCES: "CodeForces",
+  HACKERRANK: "HackerRank",
   CODECHEF: "CodeChef",
   INTERVIEWBIT: "InterviewBit",
   ATCODER: "AtCoder",
-  HACKERRANK: "HackerRank",
 };
 
 export const ProblemLevel = {

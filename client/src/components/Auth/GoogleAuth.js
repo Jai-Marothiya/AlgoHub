@@ -24,7 +24,6 @@ const GoogleAuth = () => {
         email: userInfo.email,
       },
     }).then((response) => {
-      console.log("Google Login success: ", response.data.user);
       setAccount(response.data.user);
       <Navigate to="/" />;
       setIsAuthenticated(true);

@@ -66,7 +66,6 @@ const ProblemUploadForm = () => {
         uploaded_by: account.id,
       },
     }).then((response) => {
-      console.log("Status Updated Successfully: ", response.data);
       setSnackbarMessage("Problem Uploaded Successfully");
       setOpenSnackbar(true);
       setProblemDifficulty("");
@@ -76,8 +75,6 @@ const ProblemUploadForm = () => {
       setPlatformSelected("");
 
       setProblems([...problems, response.data.newProblem]);
-      console.log("response.data.newProblem: ", response.data.newProblem);
-      console.log("updated one:  ", [...problems, response.data.newProblem]);
     });
   };
 

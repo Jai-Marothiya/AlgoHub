@@ -32,7 +32,6 @@ const AddNoteDialog = ({ toggleNote, setToggleNote, note, problemId }) => {
         note: currNote,
       },
     }).then((response) => {
-      console.log("Status Updated Successfully: ", response.data);
       setCurrNote(response.data.note);
     });
 
@@ -52,7 +51,6 @@ const AddNoteDialog = ({ toggleNote, setToggleNote, note, problemId }) => {
         problem_id: problemId,
       },
     }).then((response) => {
-      console.log("Note Deleted Successfully: ", response.data);
       setCurrNote(response.data.note);
     });
 

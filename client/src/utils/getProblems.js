@@ -13,7 +13,6 @@ export const getProblems = async (token, setIsAuthenticated, setIsLoading) => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log("problems: ", data);
       setIsLoading(false); // Authentication check complete
       return data;
     }

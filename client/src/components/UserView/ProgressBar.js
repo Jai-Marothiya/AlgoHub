@@ -1,99 +1,175 @@
 import React from "react";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, Typography, CircularProgress } from "@mui/material";
 
-const ProgressBar = ({ easy, medium, hard, notdone }) => {
-  const total = easy + medium + hard + notdone;
+const ProgressBar = ({ total, easy, medium, hard }) => {
   const easyPercent = (easy / total) * 100;
   const mediumPercent = (medium / total) * 100;
   const hardPercent = (hard / total) * 100;
-  const notdonePercent = (notdone / total) * 100;
+  const size = 200;
+  const thickness = 5;
 
   return (
     <Box
       sx={{
-        position: "relative",
-        width: 200,
-        height: 100,
-        overflow: "hidden",
-        borderRadius: "100px 100px 0 0",
-        transform: "rotate(-90deg)",
+        display: "flex",
+        maxWidth: "200px",
+        width: "100%",
+        mr: "100px",
+        justifyContent: "space-between",
       }}
     >
       <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        position="relative"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
       >
         <CircularProgress
           variant="determinate"
-          value={easyPercent + mediumPercent + hardPercent + notdonePercent}
-          sx={{ position: "absolute" }}
+          value={100}
+          size={size}
+          thickness={thickness}
+          sx={{
+            color: "#e0e0e0",
+            position: "absolute",
+          }}
         />
-        <Typography variant="h6" sx={{ position: "relative", zIndex: 1 }}>
-          {`${easy} Easy, ${medium} Medium, ${hard} Hard, ${notdone} Not Done`}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          clip: "rect(0, 200px, 100px, 0)",
-        }}
-      >
         <CircularProgress
           variant="determinate"
           value={easyPercent}
+          size={size}
+          thickness={thickness}
           sx={{
-            color: "green",
+            color: "#20A015",
             position: "absolute",
-            top: 0,
-            left: 0,
-            transform: "rotate(0deg)",
+            transform: "rotate(-90deg) !important",
           }}
         />
         <CircularProgress
           variant="determinate"
           value={mediumPercent}
+          size={size}
+          thickness={thickness}
           sx={{
-            color: "orange",
+            color: "#FFAC60",
             position: "absolute",
-            top: 0,
-            left: 0,
-            transform: "rotate(90deg)",
+            transform: `rotate(${easyPercent * 3.6 - 90}deg) !important`,
           }}
         />
         <CircularProgress
           variant="determinate"
           value={hardPercent}
+          size={size}
+          thickness={thickness}
           sx={{
-            color: "red",
+            color: "#FF3E3E",
             position: "absolute",
-            top: 0,
-            left: 0,
-            transform: "rotate(180deg)",
+            transform: `rotate(${
+              (easyPercent + mediumPercent) * 3.6 - 90
+            }deg) !important`,
           }}
         />
-        <CircularProgress
-          variant="determinate"
-          value={notdonePercent}
+        <Box position="absolute">
+          <Typography
+            variant="h6"
+            color="textPrimary"
+            sx={{
+              fontFamily: "Jost, sans-serif",
+              fontSize: "14px",
+              fontWeight: "500",
+              lineHeight: "16.0px",
+              letterSpacing: " 0px",
+              color: "rgba(0, 0, 0)",
+              textAlign: "center",
+            }}
+          >
+            <Typography sx={{ fontSize: "28px", fontWeight: "600" }}>
+              {easy + medium + hard}
+            </Typography>{" "}
+            {easy + medium + hard > 1 ? "Problems" : "Problem"} Solved
+          </Typography>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "flex-start",
+        }}
+      >
+        <Typography
           sx={{
-            color: "grey",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            transform: "rotate(270deg)",
+            fontFamily: "Jost, sans-serif",
+            fontSize: "14px",
+            fontWeight: "400",
+            lineHeight: "24.0px",
+            letterSpacing: " 0.5px",
+            color: "rgba(0, 0, 0, 0.87)",
+            mb: 2,
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              bottom: -2,
+              left: 0,
+              width: "100%",
+              height: "3px",
+              bgcolor: "#20A015",
+              borderRadius: "50px",
+            },
           }}
-        />
+        >
+          {easy} Easy
+        </Typography>
+        <Typography
+          sx={{
+            fontFamily: "Jost, sans-serif",
+            fontSize: "14px",
+            fontWeight: "400",
+            lineHeight: "24.0px",
+            letterSpacing: " 0.5px",
+            color: "rgba(0, 0, 0, 0.87)",
+            mb: 2,
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              bottom: -2,
+              left: 0,
+              width: "100%",
+              height: "3px",
+              bgcolor: "#FFAC60",
+              borderRadius: "50px",
+            },
+          }}
+        >
+          {medium} Medium
+        </Typography>
+        <Typography
+          sx={{
+            fontFamily: "Jost, sans-serif",
+            fontSize: "14px",
+            fontWeight: "400",
+            lineHeight: "24.0px",
+            letterSpacing: " 0.5px",
+            color: "rgba(0, 0, 0, 0.87)",
+            mb: 2,
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              bottom: -2,
+              left: 0,
+              width: "100%",
+              height: "3px",
+              bgcolor: "#FF3E3E",
+              borderRadius: "50px",
+            },
+          }}
+        >
+          {hard} Hard
+        </Typography>
       </Box>
     </Box>
   );

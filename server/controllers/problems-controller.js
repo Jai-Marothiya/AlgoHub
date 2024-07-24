@@ -23,8 +23,6 @@ export const uploadProblem = async (req, res) => {
       })
       .returning("*");
 
-    console.log("newProblem uploaded: ", newProblem[0].problem_desc);
-
     return res
       .status(201)
       .json({ message: "Problem uploaded", newProblem: newProblem[0] });
@@ -59,8 +57,6 @@ export const updateProblem = async (req, res) => {
       })
       .returning("*");
 
-    console.log("newProblem uploaded: ", updatedProblem[0].problem_desc);
-
     return res
       .status(201)
       .json({ message: "Problem uploaded", updatedProblem: updatedProblem[0] });
@@ -74,9 +70,6 @@ export const getProblems = async (req, res) => {
   try {
     // Fetch all problems from the database
     const problems = await db.select("*").from("problems");
-
-    // Log the retrieved problems
-    console.log("Retrieved problems: ", problems);
 
     // Send the problems data as a response
     return res.status(200).json(problems);

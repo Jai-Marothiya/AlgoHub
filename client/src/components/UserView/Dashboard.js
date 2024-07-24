@@ -19,6 +19,8 @@ const Dashboard = () => {
           pr: 4,
           display: "flex",
           marginX: "auto",
+          gap: 2,
+          pb: 10,
           justifyContent: "space-between",
         }}
       >

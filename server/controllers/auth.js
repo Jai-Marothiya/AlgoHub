@@ -10,7 +10,6 @@ const createToken = (payload) => {
 
 export const googleLogin = async (req, res) => {
   const { token_id, email, name } = req.body;
-  console.log(req.body);
 
   try {
     // Verify the ID token
@@ -24,16 +23,13 @@ export const googleLogin = async (req, res) => {
     );
 
     const { email_verified } = response.data;
-    console.log("email_verified: ", email_verified);
 
     if (email_verified) {
       // Check if the user exists in the database
       const user = await db("users").where({ email }).first();
-      console.log("user: ", user);
 
       if (user) {
         // User exists, respond accordingly
-        console.log("User already exists:", user);
         const token = createToken({ id: user.id, user: user });
         return res
           .status(200)
@@ -43,8 +39,6 @@ export const googleLogin = async (req, res) => {
         const newUser = await db("users")
           .insert({ email, name })
           .returning("*");
-
-        console.log("newUser created: ", newUser[0]);
 
         const token = createToken({ id: newUser.id, user: newUser[0] });
 
@@ -71,9 +65,7 @@ export const getUser = async (req, res) => {
     } catch (e) {
       return res.status(401).send("unauthorized");
     }
-    console.log("decoded: ", decoded);
     let user = await db("users").where({ id: decoded.user.id }).first();
-    console.log("user: ", user);
     return res.status(200).json(user);
     // return res.send(200).json(decoded);
   }

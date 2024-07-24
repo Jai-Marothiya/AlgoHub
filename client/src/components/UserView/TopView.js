@@ -1,11 +1,33 @@
-import { Box, TextField, Typography } from "@mui/material";
-import React, { useContext } from "react";
+import { Box, Typography } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../context/DataProvider";
 import ProblemUploadForm from "./ProblemUploadForm";
 import ProgressBar from "./ProgressBar";
 
 const TopView = () => {
-  const { adminView } = useContext(DataContext);
+  const { adminView, account, problems } = useContext(DataContext);
+
+  const completedProblems = problems.filter((problem) =>
+    account.problems_completed.includes(problem.id)
+  );
+
+  const [count, setCount] = useState({ easy: 0, medium: 0, hard: 0 });
+
+  useEffect(() => {
+    // Count the number of problems for each level
+    const { easy, medium, hard } = completedProblems.reduce(
+      (acc, problem) => {
+        if (problem.problem_level === "Easy") acc.easy += 1;
+        else if (problem.problem_level === "Medium") acc.medium += 1;
+        else if (problem.problem_level === "Hard") acc.hard += 1;
+        return acc;
+      },
+      { easy: 0, medium: 0, hard: 0 }
+    );
+
+    setCount({ easy, medium, hard });
+  }, [account, problems]);
+
   return (
     <Box sx={{ maxWidth: "100%" }}>
       {adminView ? (
@@ -43,7 +65,7 @@ const TopView = () => {
             marginX: "auto",
           }}
         >
-          <Box sx={{ paddingY: 11, paddingX: 3, width: "100%" }}>
+          <Box sx={{ paddingY: 11, paddingX: 3, width: "90%" }}>
             <Typography
               sx={{
                 fontFamily: "Jost, sans-serif",
@@ -65,15 +87,22 @@ const TopView = () => {
                 lineHeight: "27.0px",
                 letterSpacing: " 0.5px",
                 color: "rgba(0, 0, 0, 0.72)",
-                maxWidth: "50%",
+                maxWidth: "55%",
               }}
             >
-              Welcome to AlgoHub, the ultimate repository for coding
-              enthusiasts. Here, you'll find a diverse collection of coding
-              questions sourced from top platforms like LeetCode, CodeForces,
-              GFG, HackerRank, and more.
+              Unlock your coding potential with top challenges from various
+              platforms. Track your progress, embrace challenges, and push your
+              limits. Your hard work will pay off.
             </Typography>
           </Box>
+          <ProgressBar
+            total={problems && problems.length}
+            easy={count.easy}
+            medium={count.medium}
+            hard={count.hard}
+            height="200px"
+            width="380px"
+          />
         </Box>
       )}
     </Box>

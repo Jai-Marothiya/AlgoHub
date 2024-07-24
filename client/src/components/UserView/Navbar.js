@@ -44,7 +44,6 @@ const Navbar = () => {
     googleLogout();
     setIsAuthenticated(false);
     navigate("/auth");
-    console.log("User logged out");
   };
 
   return (

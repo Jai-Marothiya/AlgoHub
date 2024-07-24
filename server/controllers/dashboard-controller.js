@@ -10,10 +10,6 @@ export const saveNote = async (req, res) => {
         problem_id,
       })
       .first();
-    console.log("existedNote: ", existedNote);
-    console.log("user_id: ", user_id);
-    console.log("problem_id: ", problem_id);
-    console.log("note: ", note);
     let newNote;
     if (existedNote) {
       newNote = await db("notes")
@@ -35,7 +31,6 @@ export const saveNote = async (req, res) => {
         .returning("*");
     }
 
-    console.log("note updated: ", newNote[0].note);
     return res.status(201).json({ message: "notes updated", data: newNote[0] });
   } catch (error) {
     console.error("Error during notes updating:", error.message);

@@ -42,7 +42,7 @@ const EditProblemForm = ({
     React.useState(problem_tags);
   const [problemDifficulty, setProblemDifficulty] =
     React.useState(problem_level);
-  const { account, problems, setProblems } = useContext(DataContext);
+  const { account, setProblems } = useContext(DataContext);
 
   const handleTopicsChange = (event) => {
     const {
@@ -80,7 +80,6 @@ const EditProblemForm = ({
         uploaded_by: account.id,
       },
     }).then((response) => {
-      console.log("Status Updated Successfully: ", response.data);
       setSnackbarMessage("Problem Updated Successfully");
       setOpenSnackbar(true);
       setToggleEdit(false);
@@ -95,11 +94,6 @@ const EditProblemForm = ({
           problem.id !== id ? problem : response.data.updatedProblem
         )
       );
-      console.log("response.data.newProblem: ", response.data.updatedProblem);
-      console.log("updated one:  ", [
-        ...problems,
-        response.data.updatedProblem,
-      ]);
     });
   };
 

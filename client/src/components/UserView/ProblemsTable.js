@@ -8,6 +8,7 @@ import {
   ProblemStatus,
   ProblemTags,
 } from "../../constants/Constants";
+import NoProblemFound from "../icons/NoProblemFound";
 
 const ProblemsTable = () => {
   const { problems, solved, difficulty, Platforms, tags, account } =
@@ -95,13 +96,46 @@ const ProblemsTable = () => {
         {filteredProblems.length === 0 && (
           <Box
             sx={{
+              maxWidth: "595px",
+              width: "100%",
+              mx: "auto",
               height: "500px",
               display: "flex",
+              flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
+              py: 7,
             }}
           >
-            <Typography>No such problem on AlgoHub</Typography>
+            <NoProblemFound width="323px" height="240px" />
+            <Typography
+              sx={{
+                fontFamily: "Jost, sans-serif",
+                fontSize: "32px",
+                fontWeight: "500",
+                lineHeight: "44.0px",
+                letterSpacing: "-0.8px",
+                color: "rgba(0, 0, 0, 0.54)",
+                pb: "8px",
+                mt: 6,
+              }}
+            >
+              No Problem Found
+            </Typography>
+            <Typography
+              sx={{
+                fontFamily: "Jost, sans-serif",
+                fontSize: "18px",
+                fontWeight: "400",
+                lineHeight: "28.0px",
+                letterSpacing: "0",
+                color: "rgba(0, 0, 0, 0.54)",
+                textAlign: "center",
+              }}
+            >
+              Adjust your filters or explore different categories to find new
+              challenges. Keep pushing your limits!
+            </Typography>
           </Box>
         )}
       </Box>

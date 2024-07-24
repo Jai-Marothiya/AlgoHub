@@ -41,7 +41,6 @@ const TableRow = ({ last, problem }) => {
         problem_id: id,
       },
     }).then((response) => {
-      console.log("Status Updated Successfully: ", response);
       setAccount(response.data.user);
     });
   };
@@ -57,7 +56,6 @@ const TableRow = ({ last, problem }) => {
       },
     }).then((response) => {
       setNote(response.data.data);
-      console.log("response for notes: ", response.data.data);
     });
   };
 
