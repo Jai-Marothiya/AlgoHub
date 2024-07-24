@@ -10,7 +10,7 @@ const createToken = (payload) => {
 
 export const googleLogin = async (req, res) => {
   const { token_id, email, name } = req.body;
-
+  console.log("req.body: ", req.body);
   try {
     // Verify the ID token
     const response = await axios.get(
