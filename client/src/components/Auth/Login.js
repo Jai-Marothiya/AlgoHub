@@ -5,6 +5,7 @@ import ALogo from "../icons/ALogo";
 import { DataContext } from "../../context/DataProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { endpoints } from "../../constants/endpoints";
 
 const Login = () => {
   const { isAuthenticated, problems, setProblems } = useContext(DataContext);
@@ -14,7 +15,7 @@ const Login = () => {
       //fetching all the problems
       axios({
         method: "GET",
-        url: "http://localhost:5000/get-problems",
+        url: endpoints.getProblems,
       }).then((response) => {
         setProblems(response.data);
       });

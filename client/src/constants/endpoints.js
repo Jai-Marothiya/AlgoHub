@@ -5,7 +5,7 @@ const baseURL = `https://algohub-taya.netlify.app/`;
 // export const graphqlApiURL = `${baseURL}/graphql`;
 
 export const endpoints = {
-  googleLogin: `${baseURL}/login`,
+  googleLogin: `${baseURL}/google-login`,
   getUser: `${baseURL}/get-user`,
   uploadProblem: `${baseURL}/upload-problem`,
   updateProblem: `${baseURL}/update-problem`,

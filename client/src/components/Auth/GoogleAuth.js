@@ -5,6 +5,7 @@ import axios from "axios";
 import GoogleIcon from "../icons/GoogleIcon";
 import { DataContext } from "../../context/DataProvider";
 import { Navigate } from "react-router-dom";
+import { endpoints } from "../../constants/endpoints";
 
 const GoogleAuth = () => {
   const { setAccount, setIsAuthenticated } = useContext(DataContext);
@@ -17,7 +18,7 @@ const GoogleAuth = () => {
 
     axios({
       method: "POST",
-      url: "http://localhost:5000/google-login",
+      url: endpoints.googleLogin,
       data: {
         token_id: token_id,
         name: userInfo.name,
