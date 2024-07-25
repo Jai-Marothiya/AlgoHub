@@ -34,7 +34,7 @@ const PlatFormTags = ({ Platform, handleAdd, handleRemove }) => {
         alignItems: "center",
         width: "fit-content",
       }}
-      onClick={() => handleAdd(Platform)}
+      onClick={() => (selected ? handleRemove(Platform) : handleAdd(Platform))}
     >
       {Platform === ProblemPlatforms.GFG ? (
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -78,13 +78,7 @@ const PlatFormTags = ({ Platform, handleAdd, handleRemove }) => {
       >
         {Platform}
       </Typography>
-      {selected && (
-        <CloseIcon
-          fontSize="12px"
-          color="rgba(0, 0, 0, 0.87)"
-          onClick={() => handleRemove(Platform)}
-        />
-      )}
+      {selected && <CloseIcon fontSize="12px" color="rgba(0, 0, 0, 0.87)" />}
     </Box>
   );
 };

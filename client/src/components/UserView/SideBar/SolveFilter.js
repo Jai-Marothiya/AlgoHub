@@ -50,12 +50,13 @@ const SolveFilter = () => {
           pl: "12px",
           pb: 1,
           height: "22px",
+          "&:hover": {
+            cursor: "pointer",
+          },
         }}
+        onClick={() => handleOnClick(ProblemStatus.SOLVED)}
       >
-        <CustomCheckbox
-          checked={solved.indexOf(ProblemStatus.SOLVED) !== -1}
-          onClick={() => handleOnClick(ProblemStatus.SOLVED)}
-        />
+        <CustomCheckbox checked={solved.indexOf(ProblemStatus.SOLVED) !== -1} />
         <Typography
           sx={{
             fontFamily: "Jost, sans-serif",
@@ -74,11 +75,14 @@ const SolveFilter = () => {
           alignItems: "center",
           pl: "12px",
           height: "22px",
+          "&:hover": {
+            cursor: "pointer",
+          },
         }}
+        onClick={() => handleOnClick(ProblemStatus.UNSOLVED)}
       >
         <CustomCheckbox
           checked={solved.indexOf(ProblemStatus.UNSOLVED) !== -1}
-          onClick={() => handleOnClick(ProblemStatus.UNSOLVED)}
         />
         <Typography
           sx={{

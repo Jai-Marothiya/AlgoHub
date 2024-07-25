@@ -65,11 +65,14 @@ const DifficultyFilter = () => {
           pl: "12px",
           height: "22px",
           pb: 1,
+          "&:hover": {
+            cursor: "pointer",
+          },
         }}
+        onClick={() => handleOnClick(ProblemLevel.EASY)}
       >
         <CustomCheckbox
           checked={difficulty.indexOf(ProblemLevel.EASY) !== -1}
-          onClick={() => handleOnClick(ProblemLevel.EASY)}
         />
         <Typography
           sx={{
@@ -95,11 +98,14 @@ const DifficultyFilter = () => {
           pl: "12px",
           pb: 1,
           height: "22px",
+          "&:hover": {
+            cursor: "pointer",
+          },
         }}
+        onClick={() => handleOnClick(ProblemLevel.MEDIUM)}
       >
         <CustomCheckbox
           checked={difficulty.indexOf(ProblemLevel.MEDIUM) !== -1}
-          onClick={() => handleOnClick(ProblemLevel.MEDIUM)}
         />
         <Typography
           sx={{
@@ -125,11 +131,14 @@ const DifficultyFilter = () => {
           pl: "12px",
           pb: 1,
           height: "22px",
+          "&:hover": {
+            cursor: "pointer",
+          },
         }}
+        onClick={() => handleOnClick(ProblemLevel.HARD)}
       >
         <CustomCheckbox
           checked={difficulty.indexOf(ProblemLevel.HARD) !== -1}
-          onClick={() => handleOnClick(ProblemLevel.HARD)}
         />
         <Typography
           sx={{

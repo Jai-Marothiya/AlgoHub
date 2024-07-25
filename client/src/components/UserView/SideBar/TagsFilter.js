@@ -42,12 +42,13 @@ const TagsFilter = () => {
           pl: "12px",
           height: "22px",
           pb: "8px",
+          "&:hover": {
+            cursor: "pointer",
+          },
         }}
+        onClick={() => handleOnClick(ProblemTags[key])}
       >
-        <CustomCheckbox
-          checked={tags.indexOf(ProblemTags[key]) !== -1}
-          onClick={() => handleOnClick(ProblemTags[key])}
-        />
+        <CustomCheckbox checked={tags.indexOf(ProblemTags[key]) !== -1} />
         <Typography
           sx={{
             fontFamily: "Jost, sans-serif",
