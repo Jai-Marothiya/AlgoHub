@@ -42,7 +42,8 @@ const ProblemUploadForm = () => {
     );
   };
 
-  const uploadProblem = () => {
+  const uploadProblem = (event) => {
+    event.preventDefault();
     if (
       !problemWritten &&
       !problemLink &&
@@ -161,7 +162,6 @@ const ProblemUploadForm = () => {
               <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
-                defaultValue={""}
                 value={platformSelected}
                 onChange={(e) => setPlatformSelected(e.target.value)}
                 label="Platform"

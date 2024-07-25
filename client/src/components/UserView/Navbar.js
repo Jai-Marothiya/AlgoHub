@@ -116,6 +116,7 @@ const Navbar = () => {
                     <MenuItem
                       key={setting}
                       onClick={() => handleCloseUserMenu(setting)}
+                      sx={{ py: "4px" }}
                     >
                       <Typography
                         textAlign="center"

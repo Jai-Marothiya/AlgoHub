@@ -36,7 +36,7 @@ const Login = () => {
     >
       <Box
         component="img"
-        src="SideImage.png" // Update this path to your PNG file
+        src="SideImage.jpeg" // Update this path to your PNG file
         sx={{
           width: "30%",
           height: "100%",
