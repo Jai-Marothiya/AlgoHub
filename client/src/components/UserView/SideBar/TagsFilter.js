@@ -13,6 +13,9 @@ const CustomCheckbox = styled(Checkbox)(({ theme }) => ({
     width: 16, // Set width
     height: 16, // Set height
   },
+  "& .MuiButtonBase-root": {
+    padding: 0, // Ensure the padding of the root element is set to 0
+  },
 }));
 
 const TagsFilter = () => {
@@ -38,10 +41,9 @@ const TagsFilter = () => {
         sx={{
           display: "flex",
           justifyContent: "flex-start",
-          alignItems: "center",
+          alignItems: "flex-start",
           pl: "12px",
-          height: "22px",
-          pb: "8px",
+          height: "fit-content",
         }}
       >
         <CustomCheckbox
@@ -53,7 +55,8 @@ const TagsFilter = () => {
             fontFamily: "Jost, sans-serif",
             fontSize: "14px",
             fontWeight: "400",
-            lineHeight: "22.0px",
+            lineHeight: "16.0px",
+            pt: "9px",
           }}
         >
           {ProblemTags[key]}
@@ -80,7 +83,7 @@ const TagsFilter = () => {
           lineHeight: "22.0px",
           letterSpacing: 0.25,
           pl: "16px",
-          pb: "12px",
+          pb: "8px",
         }}
       >
         Topics

@@ -6,6 +6,7 @@ const DataProvider = ({ children }) => {
   const [account, setAccount] = useState();
   const [adminView, setAdminView] = useState(false);
   const [problems, setProblems] = useState([]);
+  const [problemNotes, setProblemNotes] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [solved, setSolved] = useState([]);
   const [difficulty, setDifficulty] = useState([]);
@@ -19,6 +20,8 @@ const DataProvider = ({ children }) => {
         setAccount,
         problems,
         setProblems,
+        problemNotes,
+        setProblemNotes,
         isAuthenticated,
         setIsAuthenticated,
         solved,

@@ -7,7 +7,7 @@ import { DataContext } from "../../context/DataProvider";
 import { Navigate } from "react-router-dom";
 import { endpoints } from "../../constants/endpoints";
 
-const GoogleAuth = () => {
+const GoogleAuth = ({ setLoading }) => {
   const { setAccount, setIsAuthenticated } = useContext(DataContext);
   const responseSuccessGoogle = async (token_id) => {
     let userInfo = await axios
@@ -15,7 +15,9 @@ const GoogleAuth = () => {
         headers: { Authorization: `Bearer ${token_id}` },
       })
       .then((res) => res.data);
-
+    if (userInfo && userInfo.email) {
+      setLoading(true);
+    }
     axios({
       method: "POST",
       url: endpoints.googleLogin,
@@ -26,6 +28,7 @@ const GoogleAuth = () => {
       },
     }).then((response) => {
       setAccount(response.data.user);
+      setLoading(false);
       <Navigate to="/" />;
       setIsAuthenticated(true);
       localStorage.setItem("refreshToken", JSON.stringify(response.data.token));

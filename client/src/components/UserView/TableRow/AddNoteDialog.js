@@ -7,6 +7,7 @@ import { DataContext } from "../../../context/DataProvider";
 import axios from "axios";
 
 const AddNoteDialog = ({ toggleNote, setToggleNote, note, problemId }) => {
+  const { setProblemNotes } = React.useContext(DataContext);
   const [currNote, setCurrNote] = React.useState(note);
   const { account } = React.useContext(DataContext);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -33,6 +34,26 @@ const AddNoteDialog = ({ toggleNote, setToggleNote, note, problemId }) => {
       },
     }).then((response) => {
       setCurrNote(response.data.note);
+      const newNote = response.data.data;
+      setProblemNotes((prevNotes) => {
+        if (!Array.isArray(prevNotes)) {
+          prevNotes = [];
+        }
+        // Check if the note already exists
+        const noteIndex = prevNotes.findIndex(
+          (note) => note.problem_id === newNote.problem_id
+        );
+
+        if (noteIndex !== -1) {
+          // Update the existing note
+          const updatedNotes = [...prevNotes];
+          updatedNotes[noteIndex] = newNote;
+          return updatedNotes;
+        } else {
+          // Add the new note
+          return [...prevNotes, newNote];
+        }
+      });
     });
 
     setToggleNote(false);

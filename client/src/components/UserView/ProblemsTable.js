@@ -11,8 +11,15 @@ import {
 import NoProblemFound from "../icons/NoProblemFound";
 
 const ProblemsTable = () => {
-  const { problems, solved, difficulty, Platforms, tags, account } =
-    useContext(DataContext);
+  const {
+    problems,
+    solved,
+    difficulty,
+    Platforms,
+    tags,
+    account,
+    problemNotes,
+  } = useContext(DataContext);
   const [filteredProblems, setFilteredProblems] = useState(problems);
 
   const filterProblem = (problem) => {
@@ -63,6 +70,14 @@ const ProblemsTable = () => {
     return response;
   };
 
+  const getNoteForProblem = (problemId) => {
+    const noteObject =
+      problemNotes &&
+      problemNotes.length > 0 &&
+      problemNotes.find((note) => note.problem_id === problemId);
+    return noteObject ? noteObject.note : "";
+  };
+
   useEffect(() => {
     const filtered =
       problems.length > 0 &&
@@ -88,6 +103,7 @@ const ProblemsTable = () => {
               <TableRow
                 problem={problem}
                 last={index + 1 === problems.length}
+                note={getNoteForProblem(problem.id)}
               />
             ) : (
               <></>

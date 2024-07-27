@@ -39,19 +39,18 @@ export const saveNote = async (req, res) => {
 };
 
 export const getNote = async (req, res) => {
-  const { user_id, problem_id } = req.body;
+  const { user_id } = req.body;
 
   try {
     const note = await db("notes")
       .where({
         user_id,
-        problem_id,
       })
       .returning("*");
 
     return res.status(200).json({
       message: "note fetched",
-      data: note && note[0] ? note[0].note : "",
+      data: note,
     });
   } catch (error) {
     console.error("Error fetching note:", error.message);

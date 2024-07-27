@@ -34,7 +34,7 @@ const App = () => {
       <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
         <Box
           sx={{
-            width: "99vw",
+            width: "100%",
             height: "100vh",
             "&::-webkit-scrollbar": {
               width: "6px",
