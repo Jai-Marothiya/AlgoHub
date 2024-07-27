@@ -1,14 +1,23 @@
 import { Box, Typography } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import GoogleAuth from "./GoogleAuth";
 import ALogo from "../icons/ALogo";
 import { DataContext } from "../../context/DataProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { endpoints } from "../../constants/endpoints";
+import LoaderDialog from "./LoaderDialog";
 
 const Login = () => {
-  const { isAuthenticated, problems, setProblems } = useContext(DataContext);
+  const {
+    isAuthenticated,
+    account,
+    problems,
+    setProblems,
+    problemNotes,
+    setProblemNotes,
+  } = useContext(DataContext);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) {
@@ -20,10 +29,21 @@ const Login = () => {
         setProblems(response.data);
       });
 
+      axios({
+        method: "POST",
+        url: endpoints.getNote,
+        data: {
+          user_id: account.id,
+        },
+      }).then((response) => {
+        setProblemNotes(response.data.data);
+      });
+
       //if user authenticated then navigate to dashboard directly
+      setLoading(false);
       navigate("/");
     }
-  }, [isAuthenticated, problems]);
+  }, [isAuthenticated, problems, problemNotes]);
   return (
     <Box
       sx={{
@@ -81,9 +101,10 @@ const Login = () => {
               of coding questions from various platforms.
             </Typography>
           </Box>
-          <GoogleAuth />
+          <GoogleAuth setLoading={setLoading} />
         </Box>
       </Box>
+      <LoaderDialog open={loading} />
     </Box>
   );
 };
