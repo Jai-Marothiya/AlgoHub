@@ -12,11 +12,10 @@ import Tick from "../../icons/Tick";
 import AddNoteDialog from "./AddNoteDialog";
 import EditProblemDialog from "./EditProblemDialog";
 
-const TableRow = ({ last, problem }) => {
+const TableRow = ({ last, problem, note }) => {
   const { account, setAccount, adminView } = useContext(DataContext);
   const [toggleNote, setToggleNote] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
-  const [note, setNote] = useState("");
   const {
     id,
     problem_desc,
@@ -45,24 +44,9 @@ const TableRow = ({ last, problem }) => {
     });
   };
 
-  const getNote = async () => {
-    if (!account || !account.id || !id) return;
-    axios({
-      method: "POST",
-      url: endpoints.getNote,
-      data: {
-        user_id: account.id,
-        problem_id: id,
-      },
-    }).then((response) => {
-      setNote(response.data.data);
-    });
-  };
-
   useEffect(() => {
     setIsCompleted(account.problems_completed.indexOf(id));
-    getNote();
-  }, [account, toggleNote]);
+  }, [account]);
 
   return (
     <>
