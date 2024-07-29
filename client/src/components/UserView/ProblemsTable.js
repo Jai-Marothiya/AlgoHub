@@ -18,7 +18,7 @@ const ProblemsTable = () => {
     Platforms,
     tags,
     account,
-    problemNotes,
+    userProblems,
   } = useContext(DataContext);
   const [filteredProblems, setFilteredProblems] = useState(problems);
 
@@ -26,10 +26,13 @@ const ProblemsTable = () => {
     let response = true;
     //Solve-Unsolved filter
     if (solved.length === 1) {
-      const problemDone =
-        account &&
-        account.problems_completed &&
-        account.problems_completed.indexOf(problem.id) !== -1;
+      const foundProblem =
+        userProblems &&
+        userProblems.find(
+          (userProblem) => userProblem.problem_id === problem.id
+        );
+      const problemDone = foundProblem ? foundProblem.status : false;
+
       response &=
         solved[0] === ProblemStatus.SOLVED ? problemDone : !problemDone;
     }
@@ -72,9 +75,8 @@ const ProblemsTable = () => {
 
   const getNoteForProblem = (problemId) => {
     const noteObject =
-      problemNotes &&
-      problemNotes.length > 0 &&
-      problemNotes.find((note) => note.problem_id === problemId);
+      userProblems &&
+      userProblems.find((userProblem) => userProblem.problem_id === problemId);
     return noteObject ? noteObject.note : "";
   };
 

@@ -90,29 +90,33 @@ export const markCompleted = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    let problemsCompleted = user.problems_completed || [];
+    let userProblem = await db("user_problems")
+      .where({ user_id, problem_id })
+      .first();
 
-    // Check if the problem_id is already in the problems_completed array
-    const problemIndex = problemsCompleted.indexOf(problem_id);
-
-    if (problemIndex === -1) {
-      // If problem_id is not in the array, add it
-      problemsCompleted.push(problem_id);
+    if (!userProblem) {
+      // If row does not exist, create it
+      userProblem = await db("user_problems")
+        .insert({
+          user_id,
+          problem_id,
+          note: "",
+          status: true,
+        })
+        .returning("*");
     } else {
-      // If problem_id is in the array, remove it
-      problemsCompleted = problemsCompleted.filter((id) => id !== problem_id);
+      // If row exists, toggle the status
+      userProblem = await db("user_problems")
+        .where({ user_id, problem_id })
+        .update({
+          status: !userProblem.status,
+        })
+        .returning("*");
     }
-
-    // Update the user's problems_completed array in the database
-    await db("users")
-      .where({ id: user_id })
-      .update({ problems_completed: problemsCompleted });
-    user = await db("users").where({ id: user_id }).first();
 
     return res.status(200).json({
       message: "Problem status updated successfully",
-      problems_completed: problemsCompleted,
-      user: user,
+      userProblem: userProblem[0],
     });
   } catch (error) {
     console.error("Error updating problem status:", error.message);

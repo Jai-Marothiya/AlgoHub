@@ -1,9 +1,10 @@
 exports.up = function (knex) {
-  return knex.schema.createTable("notes", function (table) {
-    table.uuid("id").defaultTo(knex.raw("gen_random_uuid()")).primary();
-    table.uuid("user_id").notNullable();
-    table.uuid("problem_id").notNullable();
+  return knex.schema.createTable("user_problems", function (table) {
+    table.increments("id").primary();
+    table.integer("user_id").notNullable();
+    table.integer("problem_id").notNullable();
     table.text("note");
+    table.boolean("status").defaultTo(false);
 
     table
       .foreign("user_id")

@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "db-change": "npx knex migrate:make",
+    "db-migrate": "npx knex migrate:latest"
   },
   "keywords": [],
   "author": "",

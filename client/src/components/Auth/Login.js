@@ -14,8 +14,8 @@ const Login = () => {
     account,
     problems,
     setProblems,
-    problemNotes,
-    setProblemNotes,
+    userProblems,
+    setUserProblems,
   } = useContext(DataContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -29,21 +29,31 @@ const Login = () => {
         setProblems(response.data);
       });
 
+      //if user authenticated then navigate to dashboard directly
+      setLoading(false);
+      navigate("/");
+    }
+  }, [isAuthenticated, problems]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      //fetching all the problems
       axios({
         method: "POST",
-        url: endpoints.getNote,
+        url: endpoints.getUserProblems,
         data: {
           user_id: account.id,
         },
       }).then((response) => {
-        setProblemNotes(response.data.data);
+        setUserProblems(response.data.userProblems);
       });
 
       //if user authenticated then navigate to dashboard directly
       setLoading(false);
       navigate("/");
     }
-  }, [isAuthenticated, problems, problemNotes]);
+  }, [isAuthenticated, userProblems]);
+
   return (
     <Box
       sx={{

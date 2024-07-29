@@ -10,7 +10,7 @@ const createToken = (payload) => {
 
 export const googleLogin = async (req, res) => {
   const { token_id, email, name } = req.body;
-  console.log("req.body: ", req.body);
+
   try {
     // Verify the ID token
     const response = await axios.get(
@@ -57,17 +57,27 @@ export const googleLogin = async (req, res) => {
 
 export const getUser = async (req, res) => {
   if (req.headers && req.headers.authorization) {
-    var authorization = req.headers.authorization,
-      decoded;
+    const authorization = req.headers.authorization;
+    let decoded;
 
     try {
       decoded = await jwt.verify(authorization, process.env.REFRESH_SECRET_KEY);
     } catch (e) {
       return res.status(401).send("unauthorized");
     }
-    let user = await db("users").where({ id: decoded.user.id }).first();
-    return res.status(200).json(user);
-    // return res.send(200).json(decoded);
+
+    try {
+      // Get user data along with respective data from user_problems table
+      const user = await db("users").where({ id: decoded.user.id }).first();
+
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      return res.status(200).json({ user });
+    } catch (e) {
+      return res.status(500).send("Internal server error");
+    }
   }
-  return res.status(500);
+  return res.status(500).send("Authorization header not found");
 };
