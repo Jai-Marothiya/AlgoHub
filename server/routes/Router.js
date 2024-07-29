@@ -7,9 +7,9 @@ import {
   updateProblem,
 } from "../controllers/problems-controller.js";
 import {
-  getNote,
   saveNote,
   deleteNote,
+  getUserProblems,
 } from "../controllers/dashboard-controller.js";
 
 const router = express.Router();
@@ -19,9 +19,9 @@ router.get("/get-user", getUser);
 router.post("/upload-problem", uploadProblem);
 router.put("/update-problem", updateProblem);
 router.get("/get-problems", getProblems);
+router.post("/get-user-problems", getUserProblems);
 router.put("/mark-completed", markCompleted);
 router.post("/save-note", saveNote);
-router.post("/get-note", getNote);
 router.put("/delete-note", deleteNote);
 
 export default router;

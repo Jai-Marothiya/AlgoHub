@@ -12,6 +12,9 @@ const knexConfig = {
       password: process.env.PG_PASSWORD,
       database: process.env.PG_DATABASE,
     },
+    migrations: {
+      directory: "./migrations",
+    },
   },
   production: {
     client: "pg",
@@ -20,6 +23,9 @@ const knexConfig = {
       user: process.env.PG_USER,
       password: process.env.PG_PASSWORD,
       database: process.env.PG_DATABASE,
+    },
+    migrations: {
+      directory: "./migrations",
     },
   },
 };

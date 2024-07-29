@@ -5,15 +5,20 @@ import ProblemUploadForm from "./ProblemUploadForm";
 import ProgressBar from "./ProgressBar";
 
 const TopView = () => {
-  const { adminView, account, problems } = useContext(DataContext);
-
-  const completedProblems = problems.filter((problem) =>
-    account.problems_completed.includes(problem.id)
-  );
+  const { adminView, account, problems, userProblems } =
+    useContext(DataContext);
 
   const [count, setCount] = useState({ easy: 0, medium: 0, hard: 0 });
 
   useEffect(() => {
+    const completedProblems = problems.filter((problem) => {
+      const userProblem =
+        userProblems &&
+        userProblems.find(
+          (up) => up.problem_id === problem.id && up.status === true
+        );
+      return userProblem ? true : false;
+    });
     // Count the number of problems for each level
     const { easy, medium, hard } = completedProblems.reduce(
       (acc, problem) => {
@@ -26,7 +31,7 @@ const TopView = () => {
     );
 
     setCount({ easy, medium, hard });
-  }, [account, problems]);
+  }, [account, problems, userProblems]);
 
   return (
     <Box sx={{ maxWidth: "100%" }}>

@@ -1,4 +1,10 @@
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import Tag from "./Tag";
 import PlatformLogo from "./PlatformLogo";
@@ -13,9 +19,11 @@ import AddNoteDialog from "./AddNoteDialog";
 import EditProblemDialog from "./EditProblemDialog";
 
 const TableRow = ({ last, problem, note }) => {
-  const { account, setAccount, adminView } = useContext(DataContext);
+  const { account, adminView, userProblems, setUserProblems } =
+    useContext(DataContext);
   const [toggleNote, setToggleNote] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {
     id,
     problem_desc,
@@ -24,14 +32,18 @@ const TableRow = ({ last, problem, note }) => {
     platform,
     problem_level,
   } = problem;
-  const [isCompleted, setIsCompleted] = useState(
-    account.problems_completed.indexOf(id)
-  );
+  const [isCompleted, setIsCompleted] = useState(() => {
+    const foundProblem =
+      userProblems &&
+      userProblems.find((userProblem) => userProblem.problem_id === problem.id);
+    return foundProblem ? foundProblem.status : false;
+  });
 
   const problemTagsArray =
     problem_tags && problem_tags.map((tag) => capitalizeFirstLetter(tag));
 
   const updateStatus = async () => {
+    setLoading(true);
     axios({
       method: "PUT",
       url: endpoints.markCompleted,
@@ -40,12 +52,34 @@ const TableRow = ({ last, problem, note }) => {
         problem_id: id,
       },
     }).then((response) => {
-      setAccount(response.data.user);
+      const data = response.data.userProblem;
+      setUserProblems((prevUserProblems) => {
+        const problemExists = prevUserProblems.some(
+          (userProblem) => userProblem.problem_id === data.problem_id
+        );
+
+        if (problemExists) {
+          return prevUserProblems.map((userProblem) =>
+            userProblem.problem_id === data.problem_id ? data : userProblem
+          );
+        } else {
+          return [...prevUserProblems, data];
+        }
+      });
+      setLoading(false);
+      setIsCompleted(data && data.status);
     });
   };
 
   useEffect(() => {
-    setIsCompleted(account.problems_completed.indexOf(id));
+    setIsCompleted(() => {
+      const foundProblem =
+        userProblems &&
+        userProblems.find(
+          (userProblem) => userProblem.problem_id === problem.id
+        );
+      return foundProblem ? foundProblem.status : false;
+    });
   }, [account]);
 
   return (
@@ -103,12 +137,15 @@ const TableRow = ({ last, problem, note }) => {
                   },
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   paddingX: 2,
                   paddingY: 1.2,
                 }}
                 onClick={updateStatus}
               >
-                {isCompleted === -1 ? (
+                {loading ? (
+                  <CircularProgress size={"20px"} sx={{ px: "30px" }} />
+                ) : !isCompleted ? (
                   "Mark as Completed"
                 ) : (
                   <>

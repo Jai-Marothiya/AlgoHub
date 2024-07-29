@@ -7,7 +7,7 @@ import { DataContext } from "../../../context/DataProvider";
 import axios from "axios";
 
 const AddNoteDialog = ({ toggleNote, setToggleNote, note, problemId }) => {
-  const { setProblemNotes } = React.useContext(DataContext);
+  const { setUserProblems } = React.useContext(DataContext);
   const [currNote, setCurrNote] = React.useState(note);
   const { account } = React.useContext(DataContext);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -23,6 +23,10 @@ const AddNoteDialog = ({ toggleNote, setToggleNote, note, problemId }) => {
       setSnackbarMessage("Please add a note");
       setOpenSnackbar(true);
       return;
+    } else if (currNote && currNote === note) {
+      setSnackbarMessage("Please edit a note");
+      setOpenSnackbar(true);
+      return;
     }
     axios({
       method: "POST",
@@ -33,25 +37,21 @@ const AddNoteDialog = ({ toggleNote, setToggleNote, note, problemId }) => {
         note: currNote,
       },
     }).then((response) => {
-      setCurrNote(response.data.note);
       const newNote = response.data.data;
-      setProblemNotes((prevNotes) => {
-        if (!Array.isArray(prevNotes)) {
-          prevNotes = [];
-        }
-        // Check if the note already exists
-        const noteIndex = prevNotes.findIndex(
-          (note) => note.problem_id === newNote.problem_id
+      setCurrNote(newNote.note);
+      setUserProblems((prevUserProblems) => {
+        const problemExists = prevUserProblems.some(
+          (userProblem) => userProblem.problem_id === newNote.problem_id
         );
 
-        if (noteIndex !== -1) {
-          // Update the existing note
-          const updatedNotes = [...prevNotes];
-          updatedNotes[noteIndex] = newNote;
-          return updatedNotes;
+        if (problemExists) {
+          return prevUserProblems.map((userProblem) =>
+            userProblem.problem_id === newNote.problem_id
+              ? newNote
+              : userProblem
+          );
         } else {
-          // Add the new note
-          return [...prevNotes, newNote];
+          return [...prevUserProblems, newNote];
         }
       });
     });
@@ -72,7 +72,13 @@ const AddNoteDialog = ({ toggleNote, setToggleNote, note, problemId }) => {
         problem_id: problemId,
       },
     }).then((response) => {
-      setCurrNote(response.data.note);
+      const data = response.data.userProblem;
+      setCurrNote(data.note);
+      setUserProblems((prevUserProblems) =>
+        prevUserProblems.map((userProblem) =>
+          userProblem.problem_id === data.problem_id ? data : userProblem
+        )
+      );
     });
 
     setToggleNote(false);

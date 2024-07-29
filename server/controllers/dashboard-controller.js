@@ -4,7 +4,7 @@ export const saveNote = async (req, res) => {
   const { user_id, problem_id, note } = req.body;
 
   try {
-    const existedNote = await db("notes")
+    const existedNote = await db("user_problems")
       .where({
         user_id,
         problem_id,
@@ -12,7 +12,7 @@ export const saveNote = async (req, res) => {
       .first();
     let newNote;
     if (existedNote) {
-      newNote = await db("notes")
+      newNote = await db("user_problems")
         .where({
           user_id,
           problem_id,
@@ -22,7 +22,7 @@ export const saveNote = async (req, res) => {
         })
         .returning("*");
     } else {
-      newNote = await db("notes")
+      newNote = await db("user_problems")
         .insert({
           user_id,
           problem_id,
@@ -38,22 +38,22 @@ export const saveNote = async (req, res) => {
   }
 };
 
-export const getNote = async (req, res) => {
+export const getUserProblems = async (req, res) => {
   const { user_id } = req.body;
 
   try {
-    const note = await db("notes")
+    const userProblems = await db("user_problems")
       .where({
         user_id,
       })
       .returning("*");
 
     return res.status(200).json({
-      message: "note fetched",
-      data: note,
+      message: "user problems fetched",
+      userProblems,
     });
   } catch (error) {
-    console.error("Error fetching note:", error.message);
+    console.error("Error clearing note:", error.message);
     return res.status(500).json({ message: error.message });
   }
 };
@@ -62,19 +62,22 @@ export const deleteNote = async (req, res) => {
   const { user_id, problem_id } = req.body;
 
   try {
-    await db("notes")
+    const userProblem = await db("user_problems")
       .where({
         user_id,
         problem_id,
       })
-      .del();
+      .update({
+        note: "",
+      })
+      .returning("*");
 
     return res.status(200).json({
-      message: "note deleted",
-      data: "",
+      message: "Note cleared",
+      userProblem: userProblem[0],
     });
   } catch (error) {
-    console.error("Error deleting note:", error.message);
+    console.error("Error clearing note:", error.message);
     return res.status(500).json({ message: error.message });
   }
 };

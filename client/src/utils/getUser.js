@@ -14,7 +14,7 @@ export const getUsers = async (token, setIsAuthenticated, setAccount) => {
       const data = await response.json();
       // Handle the user data here
       setIsAuthenticated(true);
-      setAccount(data);
+      setAccount(data.user);
       return { authenticated: true };
     } else {
       setIsAuthenticated(false);
