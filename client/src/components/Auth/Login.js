@@ -9,7 +9,7 @@ import { endpoints } from "../../constants/endpoints";
 import LoaderDialog from "./LoaderDialog";
 import LoadingSkeleton from "./LoadingSkeleton";
 
-const Login = ({ loading, setLoading }) => {
+const Login = ({ loading, setLoading, refreshLoading, setRefreshLoading }) => {
   const {
     isAuthenticated,
     account,
@@ -46,7 +46,7 @@ const Login = ({ loading, setLoading }) => {
       }).then((response) => {
         setUserProblems(response.data.userProblems);
         navigate("/");
-        setLoading(false);
+        setRefreshLoading(false);
       });
 
       //if user authenticated then navigate to dashboard directly
@@ -63,7 +63,7 @@ const Login = ({ loading, setLoading }) => {
         width: "100%",
       }}
     >
-      {!loading ? (
+      {!refreshLoading ? (
         <>
           <Box
             component="img"
@@ -112,7 +112,7 @@ const Login = ({ loading, setLoading }) => {
                   repository of coding questions from various platforms.
                 </Typography>
               </Box>
-              <GoogleAuth setLoading={setLoading} />
+              <GoogleAuth loading={loading} setLoading={setLoading} />
             </Box>
           </Box>
         </>
