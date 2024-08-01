@@ -19,6 +19,7 @@ const App = () => {
   const { setAccount, isAuthenticated, setIsAuthenticated } =
     useContext(DataContext);
   const [loading, setLoading] = useState(false);
+  const [refreshLoading, setRefreshLoading] = useState(false);
 
   const fetchData = async (token) => {
     await getUsers(token, setIsAuthenticated, setAccount);
@@ -27,7 +28,7 @@ const App = () => {
   useEffect(() => {
     const token = getToken();
     if (token) {
-      setLoading(true);
+      setRefreshLoading(true);
       fetchData(token);
     }
   }, []);
@@ -55,7 +56,14 @@ const App = () => {
             <Route
               exact
               path="/auth"
-              element={<Login loading={loading} setLoading={setLoading} />}
+              element={
+                <Login
+                  loading={loading}
+                  setLoading={setLoading}
+                  refreshLoading={refreshLoading}
+                  setRefreshLoading={setRefreshLoading}
+                />
+              }
             />
             <Route
               path="/"
