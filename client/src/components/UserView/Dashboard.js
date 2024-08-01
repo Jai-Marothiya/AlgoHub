@@ -1,12 +1,16 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import ProblemsTable from "./ProblemsTable";
 import Footer from "./Footer";
 import FilterSidebar from "./SideBar/FilterSidebar";
 import TopView from "./TopView";
 
-const Dashboard = () => {
+const Dashboard = ({ setLoading }) => {
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <Box>
       <Navbar />

@@ -9,7 +9,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Tag from "./Tag";
 import PlatformLogo from "./PlatformLogo";
 import Level from "./Level";
-import { capitalizeFirstLetter } from "../../../utils/utils";
 import { endpoints } from "../../../constants/endpoints";
 import { DataContext } from "../../../context/DataProvider";
 import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
@@ -38,9 +37,6 @@ const TableRow = ({ last, problem, note }) => {
       userProblems.find((userProblem) => userProblem.problem_id === problem.id);
     return foundProblem ? foundProblem.status : false;
   });
-
-  const problemTagsArray =
-    problem_tags && problem_tags.map((tag) => capitalizeFirstLetter(tag));
 
   const updateStatus = async () => {
     setLoading(true);
@@ -241,10 +237,8 @@ const TableRow = ({ last, problem, note }) => {
               },
             }}
           >
-            {problemTagsArray &&
-              problemTagsArray.map((tag, index) => (
-                <Tag key={index} tag={tag} />
-              ))}
+            {problem_tags &&
+              problem_tags.map((tag, index) => <Tag key={index} tag={tag} />)}
           </Box>
         </Box>
       </Box>

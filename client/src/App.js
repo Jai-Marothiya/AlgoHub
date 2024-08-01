@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Login from "./components/Auth/Login";
@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Dashboard from "./components/UserView/Dashboard";
 import { DataContext } from "./context/DataProvider";
 import { getUsers } from "./utils/getUser";
+import LoaderDialog from "./components/Auth/LoaderDialog";
 
 const getToken = () => {
   const tokenString = localStorage.getItem("refreshToken");
@@ -17,6 +18,7 @@ const getToken = () => {
 const App = () => {
   const { setAccount, isAuthenticated, setIsAuthenticated } =
     useContext(DataContext);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async (token) => {
     await getUsers(token, setIsAuthenticated, setAccount);
@@ -25,6 +27,7 @@ const App = () => {
   useEffect(() => {
     const token = getToken();
     if (token) {
+      setLoading(true);
       fetchData(token);
     }
   }, []);
@@ -49,11 +52,19 @@ const App = () => {
           }}
         >
           <Routes>
-            <Route exact path="/auth" element={<Login />} />
+            <Route
+              exact
+              path="/auth"
+              element={<Login loading={loading} setLoading={setLoading} />}
+            />
             <Route
               path="/"
               element={
-                isAuthenticated ? <Dashboard /> : <Navigate to="/auth" />
+                isAuthenticated ? (
+                  <Dashboard setLoading={setLoading} />
+                ) : (
+                  <Navigate to="/auth" />
+                )
               }
             />
           </Routes>

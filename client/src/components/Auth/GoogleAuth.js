@@ -28,9 +28,8 @@ const GoogleAuth = ({ setLoading }) => {
       },
     }).then((response) => {
       setAccount(response.data.user);
-      setLoading(false);
-      <Navigate to="/" />;
       setIsAuthenticated(true);
+      <Navigate to="/" />;
       localStorage.setItem("refreshToken", JSON.stringify(response.data.token));
     });
   };

@@ -1,12 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { capitalizeFirstLetter } from "../../../utils/utils";
 
 const Level = ({ level }) => {
-  const Level = capitalizeFirstLetter(level);
   return (
     <Box sx={{ mr: 3, display: "flex", alignItems: "center" }}>
-      {Level === "Easy" ? (
+      {level === "Easy" ? (
         <Typography
           sx={{
             color: "rgba(0, 120, 48, 1)",
@@ -17,9 +15,9 @@ const Level = ({ level }) => {
             letterSpacing: "0px",
           }}
         >
-          {Level}
+          {level}
         </Typography>
-      ) : Level === "Medium" ? (
+      ) : level === "Medium" ? (
         <Typography
           sx={{
             color: "rgba(234, 139, 71, 1)",
@@ -30,7 +28,7 @@ const Level = ({ level }) => {
             letterSpacing: "0px",
           }}
         >
-          {Level}
+          {level}
         </Typography>
       ) : (
         <Typography
@@ -43,7 +41,7 @@ const Level = ({ level }) => {
             letterSpacing: "0px",
           }}
         >
-          {Level}
+          {level}
         </Typography>
       )}
     </Box>
