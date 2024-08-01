@@ -111,7 +111,7 @@ const ProblemsTable = () => {
               <></>
             )
           )}
-        {filteredProblems.length === 0 && (
+        {(problems.length === 0 || filteredProblems.length === 0) && (
           <Box
             sx={{
               maxWidth: "595px",
@@ -125,7 +125,9 @@ const ProblemsTable = () => {
               py: 7,
             }}
           >
-            <NoProblemFound width="323px" height="240px" />
+            {problems.length !== 0 && (
+              <NoProblemFound width="323px" height="240px" />
+            )}
             <Typography
               sx={{
                 fontFamily: "Jost, sans-serif",
@@ -138,7 +140,7 @@ const ProblemsTable = () => {
                 mt: 6,
               }}
             >
-              No Problem Found
+              {problems.length === 0 ? "Loading ..." : "No Problem Found"}
             </Typography>
             <Typography
               sx={{
@@ -151,8 +153,8 @@ const ProblemsTable = () => {
                 textAlign: "center",
               }}
             >
-              Adjust your filters or explore different categories to find new
-              challenges. Keep pushing your limits!
+              {problems.length !== 0 &&
+                "Adjust your filters or explore different categories to find new challenges. Keep pushing your limits!"}
             </Typography>
           </Box>
         )}

@@ -18,8 +18,12 @@ const LoaderDialog = ({ open }) => {
         }}
       >
         <CircularProgress />
-        <Typography variant="body1" style={{ marginTop: "1rem" }}>
-          Please wait, we are processing your login...
+        <Typography
+          variant="body1"
+          style={{ marginTop: "1rem", textAlign: "center" }}
+        >
+          Unlock your coding potential. Your journey to mastering algorithms
+          starts here.
         </Typography>
       </DialogContent>
     </Dialog>
