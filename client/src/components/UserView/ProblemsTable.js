@@ -92,10 +92,23 @@ const ProblemsTable = () => {
       sx={{
         maxWidth: "96%",
         minWidth: "1280",
-        height: "fit-content",
+        maxHeight: "950px",
+        height: "100%",
+        overflowY: "scroll",
         width: "76%",
         boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
         borderRadius: 2,
+        "&::-webkit-scrollbar": {
+          width: "8px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(0, 0, 0, 0.18)",
+          borderRadius: "10px",
+        },
+        "&::-webkit-scrollbar-track": {
+          backgroundColor: "rgba(0,0,0,0.1)",
+          borderRadius: "10px",
+        },
       }}
     >
       <Box sx={{ px: 3 }}>

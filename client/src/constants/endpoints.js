@@ -14,5 +14,6 @@ export const endpoints = {
   getUserProblems: `${baseURL}/get-user-problems`,
   saveNote: `${baseURL}/save-note`,
   deleteNote: `${baseURL}/delete-note`,
+  markStared: `${baseURL}/mark-stared`,
   // getNote: `${baseURL}/get-note`,
 };

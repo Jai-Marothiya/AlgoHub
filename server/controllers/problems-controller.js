@@ -123,3 +123,49 @@ export const markCompleted = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const markStared = async (req, res) => {
+  const { user_id, problem_id } = req.body;
+
+  try {
+    // Fetch the user's problems_completed array
+    let user = await db("users").where({ id: user_id }).first();
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    let userProblem = await db("user_problems")
+      .where({ user_id, problem_id })
+      .first();
+
+    if (!userProblem) {
+      // If row does not exist, create it
+      userProblem = await db("user_problems")
+        .insert({
+          user_id,
+          problem_id,
+          note: "",
+          status: false,
+          stared: true,
+        })
+        .returning("*");
+    } else {
+      // If row exists, toggle the status
+      userProblem = await db("user_problems")
+        .where({ user_id, problem_id })
+        .update({
+          stared: !userProblem.stared,
+        })
+        .returning("*");
+    }
+
+    return res.status(200).json({
+      message: "Problem stared status updated successfully",
+      userProblem: userProblem[0],
+    });
+  } catch (error) {
+    console.error("Error updating problem stared status:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

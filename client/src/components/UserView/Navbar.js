@@ -13,7 +13,7 @@ import { googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataProvider.js";
 
-const adminSettings = ["Admin View", "User View", "Logout"];
+const adminSettings = ["Admin View", "User View", "Profile", "Logout"];
 const nonAdminSettings = ["Logout"];
 
 const Navbar = () => {
@@ -55,6 +55,9 @@ const Navbar = () => {
         borderBottom: "2px solid rgba(0, 0, 0, 0.28)",
         pl: 6,
         pr: 4,
+        position: "sticky",
+        top: "0",
+        zIndex: "20",
       }}
     >
       <Box maxWidth="100%">

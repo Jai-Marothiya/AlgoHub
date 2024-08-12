@@ -56,7 +56,7 @@ const TopView = () => {
                 mb: 4,
               }}
             >
-              Add questions, enhance AlgoHub
+              Add questions, enhance AlgoHunt
             </Typography>
             <ProblemUploadForm />
           </Box>
