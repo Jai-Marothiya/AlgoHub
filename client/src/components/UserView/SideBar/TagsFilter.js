@@ -44,7 +44,6 @@ const TagsFilter = () => {
           alignItems: "flex-start",
           pl: "12px",
           height: "fit-content",
-          pb: "8px",
           "&:hover": {
             cursor: "pointer",
           },
@@ -92,13 +91,13 @@ const TagsFilter = () => {
       </Typography>
       <Box
         sx={{
-          maxHeight: "300px",
+          maxHeight: "230px",
           overflowY: "scroll",
           "&::-webkit-scrollbar": {
             width: "6px",
           },
           "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "rgba(0, 0, 0, 0.08)",
+            backgroundColor: "rgba(0, 0, 0, 0.18)",
             borderRadius: "10px",
           },
           "&::-webkit-scrollbar-track": {

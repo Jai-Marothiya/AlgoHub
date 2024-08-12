@@ -5,6 +5,7 @@ import {
   uploadProblem,
   markCompleted,
   updateProblem,
+  markStared,
 } from "../controllers/problems-controller.js";
 import {
   saveNote,
@@ -21,6 +22,7 @@ router.put("/update-problem", updateProblem);
 router.get("/get-problems", getProblems);
 router.post("/get-user-problems", getUserProblems);
 router.put("/mark-completed", markCompleted);
+router.put("/mark-stared", markStared);
 router.post("/save-note", saveNote);
 router.put("/delete-note", deleteNote);
 

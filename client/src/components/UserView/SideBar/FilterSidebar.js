@@ -11,15 +11,26 @@ const FilterSidebar = () => {
       sx={{
         maxWidth: "96%",
         minWidth: "1280",
-        height: "fit-content",
+        maxHeight: "950px",
+        height: "100%",
+        overflowY: "scroll",
         width: "20%",
         boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
         borderRadius: 2,
         paddingX: 3,
-        paddingY: 4,
+        "&::-webkit-scrollbar": {
+          width: "8px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(0, 0, 0, 0.18)",
+          borderRadius: "10px",
+        },
+        "&::-webkit-scrollbar-track": {
+          backgroundColor: "transparent",
+        },
       }}
     >
-      <Box>
+      <Box sx={{ py: "30px" }}>
         <SolveFilter />
         <DifficultyFilter />
         <PlatformFilter />

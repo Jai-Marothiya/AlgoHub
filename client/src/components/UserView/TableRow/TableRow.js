@@ -4,6 +4,7 @@ import {
   CircularProgress,
   Tooltip,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import Tag from "./Tag";
@@ -16,9 +17,10 @@ import axios from "axios";
 import Tick from "../../icons/Tick";
 import AddNoteDialog from "./AddNoteDialog";
 import EditProblemDialog from "./EditProblemDialog";
+import StarIcon from "../../icons/StarIcon";
 
 const TableRow = ({ last, problem, note }) => {
-  const { account, adminView, userProblems, setUserProblems } =
+  const { account, adminView, userProblems, tags, setUserProblems } =
     useContext(DataContext);
   const [toggleNote, setToggleNote] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
@@ -37,6 +39,14 @@ const TableRow = ({ last, problem, note }) => {
       userProblems.find((userProblem) => userProblem.problem_id === problem.id);
     return foundProblem ? foundProblem.status : false;
   });
+  const [isStared, setIsStared] = useState(() => {
+    const foundProblem =
+      userProblems &&
+      userProblems.find((userProblem) => userProblem.problem_id === problem.id);
+    return foundProblem ? foundProblem.stared : false;
+  });
+
+  const isSmallScreen = useMediaQuery("(max-width:1280px)");
 
   const updateStatus = async () => {
     setLoading(true);
@@ -67,6 +77,34 @@ const TableRow = ({ last, problem, note }) => {
     });
   };
 
+  const updateStaredStatus = async () => {
+    axios({
+      method: "PUT",
+      url: endpoints.markStared,
+      data: {
+        user_id: account.id,
+        problem_id: id,
+      },
+    }).then((response) => {
+      const data = response.data.userProblem;
+      setIsStared(!isStared);
+      setUserProblems((prevUserProblems) => {
+        const problemExists = prevUserProblems.some(
+          (userProblem) => userProblem.problem_id === data.problem_id
+        );
+
+        if (problemExists) {
+          return prevUserProblems.map((userProblem) =>
+            userProblem.problem_id === data.problem_id ? data : userProblem
+          );
+        } else {
+          return [...prevUserProblems, data];
+        }
+      });
+      setIsStared(data && data.stared);
+    });
+  };
+
   useEffect(() => {
     setIsCompleted(() => {
       const foundProblem =
@@ -78,6 +116,13 @@ const TableRow = ({ last, problem, note }) => {
     });
   }, [account]);
 
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   return (
     <>
       <Box
@@ -85,13 +130,15 @@ const TableRow = ({ last, problem, note }) => {
           borderBottom: last ? "none" : "2px solid rgba(221, 228, 252, 1)",
           paddingX: 2,
           paddingY: 3,
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
         }}
       >
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
-
             alignItems: "center",
           }}
         >
@@ -102,60 +149,87 @@ const TableRow = ({ last, problem, note }) => {
             }}
           >
             <PlatformLogo Platform={platform} width="44px" height="44px" />
-            <Typography
-              sx={{
-                color: "rgba(0, 0, 0, 0.87)",
-                fontFamily: "Jost, sans-serif",
-                fontSize: "20px",
-                fontWeight: "400",
-                lineHeight: "32.0px",
-                letterSpacing: "0px",
-              }}
+            <Tooltip
+              title={
+                (isSmallScreen && problem_desc.length > 25) ||
+                problem_desc.length >= 40
+                  ? problem_desc
+                  : ""
+              }
             >
-              {problem_desc}
-            </Typography>
-          </Box>
-          <Box sx={{ mt: "12px", display: "flex", alignItems: "center" }}>
-            {!adminView && (
               <Typography
                 sx={{
-                  color: "rgba(71, 100, 234, 1)",
+                  color: "rgba(0, 0, 0, 0.87)",
                   fontFamily: "Jost, sans-serif",
-                  fontSize: "16px",
+                  fontSize: "20px",
                   fontWeight: "400",
-                  lineHeight: "34.0px",
+                  lineHeight: "32.0px",
                   letterSpacing: "0px",
-                  mr: 2,
-                  "&:hover": {
-                    background: "#F5F7FF",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                  },
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingX: 2,
-                  paddingY: 1.2,
+                  textOverflow: "ellipsis",
                 }}
-                onClick={updateStatus}
               >
-                {loading ? (
-                  <CircularProgress size={"20px"} sx={{ px: "30px" }} />
-                ) : !isCompleted ? (
-                  "Mark as Completed"
-                ) : (
-                  <>
-                    <Tick width="20px" height="20px" /> Completed
-                  </>
-                )}
+                {truncateText(problem_desc, isSmallScreen ? 25 : 40)}
               </Typography>
+            </Tooltip>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: isSmallScreen ? "16px" : "24px",
+            }}
+          >
+            {!adminView && (
+              <>
+                <Typography
+                  sx={{
+                    color: "rgba(71, 100, 234, 1)",
+                    fontFamily: "Jost, sans-serif",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    lineHeight: "20.0px",
+                    letterSpacing: "0px",
+                    width: "130px",
+                    height: "40px",
+                    "&:hover": {
+                      background: "#F5F7FF",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                    },
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onClick={updateStatus}
+                >
+                  {loading ? (
+                    <CircularProgress size={"20px"} sx={{ px: "30px" }} />
+                  ) : !isCompleted ? (
+                    "Mark as Completed"
+                  ) : (
+                    <>
+                      <Tick width="20px" height="20px" /> Completed
+                    </>
+                  )}
+                </Typography>
+                <Box
+                  sx={{ p: "8px", "&:hover": { cursor: "pointer" } }}
+                  onClick={updateStaredStatus}
+                >
+                  <StarIcon
+                    width="23px"
+                    height="23px"
+                    fill={isStared ? "#415DDD" : ""}
+                  />
+                </Box>
+              </>
             )}
             {adminView ? (
               <Button
                 sx={{
-                  paddingX: 2,
+                  paddingLeft: 2,
                   paddingY: 1.5,
-                  mr: 2,
+                  height: "40px",
                   background: "rgba(65, 93, 221, 1)",
                   "&:hover": {
                     background: "#1E3DCE",
@@ -180,7 +254,7 @@ const TableRow = ({ last, problem, note }) => {
                 sx={{
                   paddingX: 2,
                   paddingY: 1.5,
-                  mr: 2,
+                  height: "40px",
                   background: "rgba(65, 93, 221, 1)",
                   "&:hover": {
                     background: "#1E3DCE",
@@ -238,7 +312,13 @@ const TableRow = ({ last, problem, note }) => {
             }}
           >
             {problem_tags &&
-              problem_tags.map((tag, index) => <Tag key={index} tag={tag} />)}
+              problem_tags.map((tag, index) => (
+                <Tag
+                  key={index}
+                  tag={tag}
+                  isChecked={tags.indexOf(tag) !== -1}
+                />
+              ))}
           </Box>
         </Box>
       </Box>

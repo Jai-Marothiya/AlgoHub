@@ -43,7 +43,6 @@ const PlatformFilter = () => {
         py: 4.5,
         display: "flex",
         flexDirection: "column",
-        px: "12px",
       }}
     >
       <Typography
@@ -60,7 +59,9 @@ const PlatformFilter = () => {
       >
         Platform
       </Typography>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>{PlatformComponents}</Box>
+      <Box sx={{ display: "flex", flexWrap: "wrap", pl: "12px" }}>
+        {PlatformComponents}
+      </Box>
     </Box>
   );
 };
