@@ -9,7 +9,7 @@ const createToken = (payload) => {
 };
 
 export const googleLogin = async (req, res) => {
-  const { token_id, email, name } = req.body;
+  const { token_id, email, name, photo } = req.body;
 
   try {
     // Verify the ID token
@@ -37,7 +37,7 @@ export const googleLogin = async (req, res) => {
       } else {
         // User does not exist, insert new user
         const newUser = await db("users")
-          .insert({ email, name })
+          .insert({ email, name, photo })
           .returning("*");
 
         const token = createToken({ id: newUser.id, user: newUser[0] });

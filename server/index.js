@@ -17,6 +17,7 @@ app.use("/", router);
 const keepAlive = () => {
   fetch(`https://algohub.onrender.com/keep-alive`)
     .then((response) => response.json())
+    .then((data) => console.log(data.message))
     .catch((error) => console.error("Error sending keep-alive ping:", error));
 };
 

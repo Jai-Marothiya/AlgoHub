@@ -25,6 +25,7 @@ const GoogleAuth = ({ loading, setLoading }) => {
         token_id: token_id,
         name: userInfo.name,
         email: userInfo.email,
+        photo: userInfo.picture,
       },
     }).then((response) => {
       setAccount(response.data.user);

@@ -12,6 +12,7 @@ import Logo from "../icons/Logo.js";
 import { googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../context/DataProvider.js";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const adminSettings = ["Admin View", "User View", "Profile", "Logout"];
 const nonAdminSettings = ["Logout"];
@@ -84,14 +85,19 @@ const Navbar = () => {
             <Tooltip>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  src="/static/images/avatar/2.jpg"
-                  sx={{
-                    background: "#3246DE",
-                    fill: "#fff",
-                    height: "28px",
-                    width: "28px",
-                  }}
-                />
+                  alt={account?.name}
+                  src={account?.photo}
+                  sx={{ height: "32px", width: "32px" }}
+                >
+                  <AccountCircleIcon
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "#fff",
+                      fill: "#3246DE",
+                    }}
+                  />
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
