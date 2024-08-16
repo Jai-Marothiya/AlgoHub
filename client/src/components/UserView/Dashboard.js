@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import ProblemsTable from "./ProblemsTable";
@@ -10,25 +10,29 @@ const Dashboard = ({ setLoading }) => {
   useEffect(() => {
     setLoading(false);
   }, []);
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
-    <Box>
+    <Box sx={{ height: "100%" }}>
       <Navbar />
-      <TopView />
+      {isLargeScreen && <TopView />}
       <Box
         sx={{
           maxWidth: "96%",
           minWidth: "1280",
-          pl: 6,
-          pr: 4,
+          pl: { xs: 2, sm: 3, md: 6 },
+          pr: { xs: 2, sm: 3, md: 4 },
           display: "flex",
           marginX: "auto",
           gap: 2,
           pb: 10,
+          pt: { xs: 6, md: 0 },
           justifyContent: "space-between",
+          minHeight: { xs: "65vh", sm: "70vh", md: "" },
         }}
       >
-        <FilterSidebar />
+        {isLargeScreen && <FilterSidebar />}
         <ProblemsTable />
       </Box>
       <Footer />

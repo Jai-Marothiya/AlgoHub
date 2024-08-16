@@ -11,7 +11,7 @@ import HackerRank from "../../icons/HackerRank";
 
 const PlatformLogo = ({ Platform, width, height }) => {
   return (
-    <Box sx={{ mr: 2 }}>
+    <Box sx={{ mr: { xs: 1, sm: 2 } }}>
       {Platform === ProblemPlatforms.GFG ? (
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <GFG width={width} height={height} />

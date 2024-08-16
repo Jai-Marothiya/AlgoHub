@@ -38,7 +38,7 @@ const PlatformFilter = () => {
   return (
     <Box
       sx={{
-        width: "93%",
+        width: { xs: "100%", md: "93%" },
         borderBottom: "1px solid #D9D9D9",
         py: 4.5,
         display: "flex",

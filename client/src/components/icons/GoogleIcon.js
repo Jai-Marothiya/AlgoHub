@@ -5,7 +5,7 @@ const GoogleIcon = ({ width, login }) => {
   return (
     <SvgIcon
       sx={{
-        mr: 2,
+        mr: { xs: 0, sm: 2 },
         width,
         height: "80px",
         "&:hover": {

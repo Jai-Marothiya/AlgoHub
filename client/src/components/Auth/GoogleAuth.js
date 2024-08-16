@@ -43,21 +43,21 @@ const GoogleAuth = ({ loading, setLoading }) => {
   });
 
   return (
-    <Box sx={{ width: "fit-content" }}>
+    <Box sx={{ width: { xs: "auto", md: "fit-content" } }}>
       {loading ? (
         <Box
           sx={{
             mr: 2,
-            width: "518px",
-
+            width: { xs: "100%", md: "518px" },
             border: "0.5px solid rgba(0, 0, 0, 0.34)",
             borderRadius: "10px",
+            background: "#fff",
           }}
         >
           <Box
             sx={{
-              px: 4,
-              py: 3,
+              px: { xs: 3, sm: 4 },
+              py: { xs: 2, sm: 3 },
               display: "flex",
               "&:hover": {
                 cursor: "not-allowed",
@@ -72,9 +72,9 @@ const GoogleAuth = ({ loading, setLoading }) => {
                 width: "90%",
                 textAlign: "center",
                 fontFamily: "Jost, sans-serif",
-                fontSize: "25px",
+                fontSize: { xs: "16px", sm: "22px", md: "25px" },
                 fontWeight: "400",
-                lineHeight: "32.0px",
+                lineHeight: { xs: "20px", sm: "24px", md: "32.0px" },
                 letterSpacing: " 1px",
                 color: "rgba(0, 0, 0, 0.54)",
                 WebkitFontSmoothing: "antialiased", // Smooths font on Webkit browsers (Chrome, Safari)
