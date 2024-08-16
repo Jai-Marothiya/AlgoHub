@@ -29,6 +29,7 @@ const Dashboard = ({ setLoading }) => {
           pb: 10,
           pt: { xs: 6, md: 0 },
           justifyContent: "space-between",
+          minHeight: { xs: "65vh", sm: "70vh", md: "" },
         }}
       >
         {isLargeScreen && <FilterSidebar />}
