@@ -19,6 +19,7 @@ import { DataContext } from "../../context/DataProvider.js";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import FilterSidebar from "./SideBar/FilterSidebar.js";
 import ProgressBar from "./ProgressBar.js";
+import CloseIcon from "@mui/icons-material/Close";
 
 const adminSettings = ["Admin View", "User View", "Profile", "Logout"];
 const nonAdminSettings = ["Logout"];
@@ -152,7 +153,39 @@ const Navbar = () => {
           open={mobileMenuOpen}
           onClose={toggleMobileMenu(false)}
         >
-          <Box ref={drawerRef} sx={{ width: 300, px: 2 }} role="presentation">
+          <Box
+            ref={drawerRef}
+            sx={{
+              width: { xs: "fit-content", sm: 300 },
+              px: 2,
+            }}
+            role="presentation"
+          >
+            <Box
+              sx={{
+                display: { xs: "flex", sm: "none" },
+                justifyContent: "space-between",
+                alignItems: "center",
+                pt: 1,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "Jost, sans-serif",
+                  fontSize: "20px",
+                  color: "rgba(0, 0, 0, 0.87)",
+                  fontWeight: "400",
+                  lineHeight: "22.0px",
+                }}
+              >
+                Progress
+              </Typography>
+              <IconButton onClick={toggleMobileMenu(false)}>
+                <CloseIcon
+                  sx={{ fill: "#415DDD", width: "28px", height: "28px" }}
+                />
+              </IconButton>
+            </Box>
             <Box
               sx={{
                 display: "flex",

@@ -20,7 +20,7 @@ const ProgressBar = ({ total, easy, medium, hard }) => {
     <Box
       sx={{
         display: "flex",
-        maxWidth: { xs: "150px", md: "200px" },
+        maxWidth: { xs: "170px", md: "200px" },
         width: "100%",
         mr: { xs: "0", md: "100px" },
         justifyContent: "space-between",
