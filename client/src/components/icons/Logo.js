@@ -1,9 +1,9 @@
 import { SvgIcon } from "@mui/material";
 import React from "react";
 
-const Logo = () => {
+const Logo = ({ pl = 0 }) => {
   return (
-    <SvgIcon sx={{ height: "32px", width: "128px" }}>
+    <SvgIcon sx={{ height: "32px", width: "128px", pl }}>
       <svg
         width="139"
         height="33"

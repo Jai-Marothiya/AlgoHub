@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../context/DataProvider";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import TableRow from "./TableRow/TableRow";
 import {
   ProblemLevel,
@@ -21,6 +21,8 @@ const ProblemsTable = () => {
     userProblems,
   } = useContext(DataContext);
   const [filteredProblems, setFilteredProblems] = useState(problems);
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   const filterProblem = (problem) => {
     let response = true;
@@ -90,16 +92,17 @@ const ProblemsTable = () => {
   return (
     <Box
       sx={{
-        maxWidth: "96%",
-        minWidth: "1280",
+        maxWidth: { xs: "100%", md: "96%" },
+        minWidth: { xs: "", md: "1280" },
         maxHeight: "950px",
         height: "100%",
         overflowY: "scroll",
-        width: "76%",
+        overflowX: "clip",
+        width: { xs: "100%", md: "76%" },
         boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
         borderRadius: 2,
         "&::-webkit-scrollbar": {
-          width: "8px",
+          width: problems.length !== 0 ? 0 : "8px",
         },
         "&::-webkit-scrollbar-thumb": {
           backgroundColor: "rgba(0, 0, 0, 0.18)",
@@ -111,7 +114,7 @@ const ProblemsTable = () => {
         },
       }}
     >
-      <Box sx={{ px: 3 }}>
+      <Box sx={{ px: { xs: 1, sm: 3 } }}>
         {problems &&
           problems.map((problem, index) =>
             filterProblem(problem) ? (
@@ -139,7 +142,10 @@ const ProblemsTable = () => {
             }}
           >
             {problems.length !== 0 && (
-              <NoProblemFound width="323px" height="240px" />
+              <NoProblemFound
+                width={isLargeScreen ? "250px" : "323px"}
+                height="240px"
+              />
             )}
             <Typography
               sx={{

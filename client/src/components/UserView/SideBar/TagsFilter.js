@@ -94,7 +94,7 @@ const TagsFilter = () => {
           maxHeight: "230px",
           overflowY: "scroll",
           "&::-webkit-scrollbar": {
-            width: "6px",
+            width: { xs: 0, md: "6px" },
           },
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: "rgba(0, 0, 0, 0.18)",

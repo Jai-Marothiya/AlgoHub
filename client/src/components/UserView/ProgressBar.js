@@ -1,20 +1,28 @@
 import React from "react";
-import { Box, Typography, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 
 const ProgressBar = ({ total, easy, medium, hard }) => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const easyPercent = (easy / total) * 100;
   const mediumPercent = (medium / total) * 100;
   const hardPercent = (hard / total) * 100;
-  const size = 200;
+  const size = isLargeScreen ? 200 : 150;
   const thickness = 5;
 
   return (
     <Box
       sx={{
         display: "flex",
-        maxWidth: "200px",
+        maxWidth: { xs: "150px", md: "200px" },
         width: "100%",
-        mr: "100px",
+        mr: { xs: "0", md: "100px" },
         justifyContent: "space-between",
       }}
     >

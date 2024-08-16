@@ -9,17 +9,20 @@ const FilterSidebar = () => {
   return (
     <Box
       sx={{
-        maxWidth: "96%",
+        maxWidth: { xs: "100%", md: "96%" },
         minWidth: "1280",
         maxHeight: "950px",
         height: "100%",
         overflowY: "scroll",
-        width: "20%",
-        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+        width: { xs: "100%", md: "20%" },
+        boxShadow: {
+          xs: "none",
+          md: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+        },
         borderRadius: 2,
-        paddingX: 3,
+        paddingX: { xs: 0, md: 3 },
         "&::-webkit-scrollbar": {
-          width: "8px",
+          width: 0,
         },
         "&::-webkit-scrollbar-thumb": {
           backgroundColor: "rgba(0, 0, 0, 0.18)",
