@@ -1,6 +1,4 @@
-# Contributing to AlgoHunt
-
-Thank you for considering contributing to **AlgoHunt**! We welcome all contributions, whether you're fixing bugs, adding new features, or improving documentation. Your contributions help us create a better platform for our users!
+# AlgoHunt
 
 ## Project Overview
 
