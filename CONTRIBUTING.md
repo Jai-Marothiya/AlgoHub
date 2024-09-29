@@ -91,6 +91,20 @@ You must create a .env file in the client folder to store environment variables.
    REACT_APP_CLIENT_ID=1088957184358-6vg9gfngftpc85443sb1e55v4m1l4cb6.apps.googleusercontent.com
    ```
 
+## Database Backup
+
+You can download the current database backup using the link below:
+
+[Download backup.sql](https://raw.githubusercontent.com/Jai-Marothiya/AlgoHub/refs/heads/master/server/backup.sql)
+
+### How to Restore from Backup
+
+To restore the database from the backup, you can use the following command:
+
+```bash
+psql -U [username] -d [database_name] -f server/backup.sql
+```
+
 ## Run the project
 
 1. **Start the backend server**:
