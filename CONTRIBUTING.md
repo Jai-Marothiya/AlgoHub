@@ -78,7 +78,8 @@ You must create a .env file in the server folder to store environment variables.
    PG_DATABASE=algohub
    
    # Google OAuth Credentials
-   CLIENT_ID=1088957184358-6vg9gfngftpc85443sb1e55v4m1l4cb6.apps.googleusercontent.com
+   CLIENT_ID=add your google console client id
+   CLIENT_SECRET=add your google console client secret
    
    # JWT Access Key
    REFRESH_SECRET_KEY=f74b5b600a2b67c4f0ed42d65bf7a14dd394fd527bb65eaf5730ac2098e6d7e2dc51e278f0235ad9f8a1cb4b6e9efddc6e348b92d6c6e771aca0ef3b4e6fcab3
@@ -88,7 +89,7 @@ You must create a .env file in the server folder to store environment variables.
 You must create a .env file in the client folder to store environment variables. Use the following template to set up your .env file:
    ```bash
    # Google auth Ceredentials
-   REACT_APP_CLIENT_ID=1088957184358-6vg9gfngftpc85443sb1e55v4m1l4cb6.apps.googleusercontent.com
+   REACT_APP_CLIENT_ID=add your google console client id
    ```
 
 ## Database Backup
