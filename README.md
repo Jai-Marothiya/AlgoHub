@@ -1,3 +1,7 @@
+# This Repository is participating in hacktoberfest
+![HacktoberFest 2k24](https://github.com/Jai-Marothiya/AlgoHub/blob/master/client/public/HacktoberFest_2k24.png)
+
+
 # AlgoHunt
 
 ## Project Overview
